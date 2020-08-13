@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\C#\\Work\\Works\\Works4.csproj",
-      "projectName": "Works4",
-      "projectPath": "E:\\C#\\Work\\Works\\Works4.csproj",
+      "projectUniqueName": "E:\\C#\\Work\\Works\\Work4.csproj",
+      "projectName": "Work4",
+      "projectPath": "E:\\C#\\Work\\Works\\Work4.csproj",
       "packagesPath": "C:\\Users\\sq\\.nuget\\packages\\",
       "outputPath": "E:\\C#\\Work\\Works\\obj\\",
       "projectStyle": "PackageReference",

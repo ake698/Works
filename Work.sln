@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Work2", "Work2\Work2.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Work3", "Work3\Work3.csproj", "{A3E9940D-3770-458B-8F2C-6C5765CEE3FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Works", "Works\Works.csproj", "{ED169E57-DE34-4BB4-8517-A06572CA6D1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Work4", "Works\Work4.csproj", "{ED169E57-DE34-4BB4-8517-A06572CA6D1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
