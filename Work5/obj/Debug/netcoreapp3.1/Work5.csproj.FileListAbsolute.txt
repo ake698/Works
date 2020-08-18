@@ -1,0 +1,13 @@
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.exe
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.deps.json
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.runtimeconfig.json
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.runtimeconfig.dev.json
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.dll
+D:\data\C#\Works\Work5\bin\Debug\netcoreapp3.1\Work5.pdb
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.csprojAssemblyReference.cache
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.csproj.CoreCompileInputs.cache
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.AssemblyInfoInputs.cache
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.AssemblyInfo.cs
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.dll
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.pdb
+D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.genruntimeconfig.cache

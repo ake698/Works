@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\data\\C#\\Works\\Work\\Work.csproj",
-      "projectName": "Work",
-      "projectPath": "D:\\data\\C#\\Works\\Work\\Work.csproj",
+      "projectUniqueName": "D:\\data\\C#\\Works\\Work5\\Work5.csproj",
+      "projectName": "Work5",
+      "projectPath": "D:\\data\\C#\\Works\\Work5\\Work5.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\data\\C#\\Works\\Work\\obj\\",
+      "outputPath": "D:\\data\\C#\\Works\\Work5\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
