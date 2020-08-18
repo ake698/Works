@@ -1,23 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 class Sequence
 {
-    static void main(string[] args)
+    static void Main(string[] args)
     {
-        var result = Kmers(3, "AGATCGATGTG");
-        foreach (var item in result)
-        {
-            Console.WriteLine(item);
-        }
-        string seq = "ACTGA";
-        ReverseComplement(ref seq);
-        Console.WriteLine(seq);
+        //var result = Kmers(3, "AGATCGATGTG", "AGATCGATGTG");
+        //foreach (var item in result)
+        //{
+        //    Console.WriteLine(item);
+        //}
+        //string seq = "ACTGA";
+        //ReverseComplement(ref seq);
+        //Console.WriteLine(seq);
+
+        Console.WriteLine(Dyad("TGGGTCAAAATTTGGCACGCTACCCTTTATACA", 5));
+        Console.WriteLine(Dyad("TAGGAATCTCTGGCGGCCCCTGAATAGTTACTTCCAGATTCCTA", 10));
+        Console.WriteLine(Dyad("CCTGCGCAGG", 5));
+        Console.WriteLine(Dyad("AAGCTGGACTTGTGGATGTTGACGCCAGCTT", 5));
+        Console.WriteLine(Dyad("TTTATAACTTCGTGCCGGCACTAAGACTAGTGGCACGAAGTTATAAA", 15));
     }
 
-    public static string[] Kmers(int k, string seq)
+    public static string[] Kmers(int k, params string[] seqs)
     {
+        string seq = "";
+        for (int i = 0; i < seqs.Length; i++)
+        {
+            seq += seqs[i];
+        }
+        Console.WriteLine(seq);
         if (k > seq.Length) return null;
 
         int count = seq.Length - k + 1;
@@ -54,13 +67,17 @@ class Sequence
 
     public static bool Dyad(string seq, int num = 5)
     {
-        var seqArrs = seq.Split("...");
-        if(seqArrs.Length == 2 && !seqArrs.Contains(".") && seqArrs[1].Length <= 5 && seqArrs[0].Length <= 5)
+        if (seq.Length < num) return false;
+
+        string up = seq.Substring(0, num);
+        string down = seq.Substring(seq.Length - num, num);
+        string tmp = up;
+        ReverseComplement(ref tmp);
+        if (tmp.Equals(down))
         {
-            string tmp = seqArrs[0];
-            ReverseComplement(ref tmp);
-            if (tmp.Equals(seqArrs[1])) return true;
+            return true;
         }
+        
         return false;
     }
 }

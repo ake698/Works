@@ -11,3 +11,16 @@ D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.AssemblyInfo.cs
 D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.dll
 D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.pdb
 D:\data\C#\Works\Work5\obj\Debug\netcoreapp3.1\Work5.genruntimeconfig.cache
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.exe
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.deps.json
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.runtimeconfig.json
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.runtimeconfig.dev.json
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.dll
+E:\C#\Work\Work5\bin\Debug\netcoreapp3.1\Work5.pdb
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.csprojAssemblyReference.cache
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.AssemblyInfoInputs.cache
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.AssemblyInfo.cs
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.csproj.CoreCompileInputs.cache
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.dll
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.pdb
+E:\C#\Work\Work5\obj\Debug\netcoreapp3.1\Work5.genruntimeconfig.cache

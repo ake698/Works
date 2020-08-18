@@ -16,29 +16,31 @@ namespace WeatherAnalysis
         ///     data. Otherwise, the program will use hard-coded data defined
         ///     in-line in the code.
         /// </param>
-        public static void Main(string[] args)
+        public static void main(string[] args)
         {
-            if (args.Length > 0)
-            {
-                string path = args[0];
-                using (TextReader reader = new StreamReader(args[0]))
-                {
-                    PrintRainfallSummary(path, reader);
-                }
-            }
-            else
-            {
-                string path = "C:\\Path\\To\\File\\three_days_data.csv";
-                string threeDaysData = @"Product code,Bureau of Meteorology station number,Year,Month,Day,Rainfall amount (millimetres),Period over which rainfall was measured (days),Quality
-IDCJAC0009,040913,2012,01,01,2.4,1,N
-IDCJAC0009,040913,2012,01,02,,,
-IDCJAC0009,040913,2012,01,03,0.0,1,N";
+            //            if (args.Length > 0)
+            //            {
+            //                string path = args[0];
+            //                using (TextReader reader = new StreamReader(args[0]))
+            //                {
+            //                    PrintRainfallSummary(path, reader);
+            //                }
+            //            }
+            //            else
+            //            {
+            //                string path = "C:\\Path\\To\\File\\three_days_data.csv";
+            //                string threeDaysData = @"Product code,Bureau of Meteorology station number,Year,Month,Day,Rainfall amount (millimetres),Period over which rainfall was measured (days),Quality
+            //IDCJAC0009,040913,2012,01,01,2.4,1,N
+            //IDCJAC0009,040913,2012,01,02,,,
+            //IDCJAC0009,040913,2012,01,03,0.0,1,N";
 
-                using (TextReader reader = new StringReader(threeDaysData))
-                {
-                    PrintRainfallSummary(path, reader);
-                }
-            }
+            //                using (TextReader reader = new StringReader(threeDaysData))
+            //                {
+            //                    PrintRainfallSummary(path, reader);
+            //                }
+            //            }
+            TextReader reader = new StreamReader(@"C:\Users\sq\Desktop\11\Rainfall\Data\IDCJAC0009_040913_2017_Data.csv");
+            PrintRainfallSummary(@"C:\Users\sq\Desktop\11\Rainfall\Data\IDCJAC0009_040913_2017_Data.csv", reader);
         }
 
         /// <summary>
@@ -64,7 +66,9 @@ IDCJAC0009,040913,2012,01,03,0.0,1,N";
         // INSERT METHOD HERE. 
         public static void PrintRainfallSummary(string filePath, TextReader reader)
         {
-            Console.WriteLine($"Reading data from {filePath}...");
+            var fparrs = filePath.Split(@"/");
+
+            Console.WriteLine($"Reading data from {fparrs[fparrs.Length - 1]}...");
             Console.WriteLine();
             string line;
             int count = 0, record = 0;
@@ -83,27 +87,46 @@ IDCJAC0009,040913,2012,01,03,0.0,1,N";
 
                 string rainStr = arrs[5];
                 decimal rainAmount = 0;
-                var flag = decimal.TryParse(rainStr, out rainAmount);
-                if (flag)
+
+                if (!string.IsNullOrEmpty(rainStr))
                 {
-                    max = max > rainAmount?max:rainAmount;
+                    rainAmount = decimal.Parse(rainStr);
+                    max = max > rainAmount ? max : rainAmount;
                     total += rainAmount;
                     record++;
                 }
                 else
                 {
                     miss++;
-                }
-            }
 
+                }
+                //Console.WriteLine(line);
+                //var flag = decimal.TryParse(rainStr, out rainAmount);
+                //if (flag)
+                //{
+                //    max = max > rainAmount?max:rainAmount;
+                //    total += rainAmount;
+                //    record++;
+
+                //}
+                //else
+                //{
+                //    Console.WriteLine(rainStr);
+                //    Console.WriteLine(line);
+                //    miss++;
+                //}
+            }
+            //Console.WriteLine(miss);
+            //Console.WriteLine(record);
+            //Console.WriteLine(count);
+            //Console.WriteLine(miss/record);
             average = Math.Round(total / record, 2);
-            miss = Math.Round(miss / (count-1), 2);
+            miss = Math.Round((miss / (count-1))*100, 2);
             Console.WriteLine($"Year: {year}");
-            Console.WriteLine($"Totla Rainfall: {total.ToString("#0.00")} mm");
+            Console.WriteLine($"Total Rainfall: {total.ToString("#0.00")} mm");
             Console.WriteLine($"Average Rainfall: {average.ToString("#0.00")} mm / day");
             Console.WriteLine($"Maximum Daily Rainfall: {max.ToString("#0.00")} mm");
             Console.WriteLine($"Missing Data: {miss.ToString("#0.00")}%");
-            Console.WriteLine();
         }
     }
 }
