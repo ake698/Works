@@ -1,6 +1,7 @@
 ﻿using Display;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Life
 {
@@ -16,6 +17,88 @@ namespace Life
             // Feel free to remove or modify it when you are comfortable with it.
 
             // Specify grid dimensions and active cells...
+
+            LifeParams lifeParams = new LifeParams(args);
+
+            // Grid
+            Grid grid = GenerateCell(lifeParams);
+
+            // Wait for user to press a key...
+            Console.WriteLine("Press any key to start...");
+            //Console.ReadKey();
+            grid.InitializeWindow();
+
+            // Set the footnote (appears in the bottom left of the screen).
+            grid.SetFootnote("Smiley");
+
+            // Set complete marker as true
+            grid.IsComplete = true;
+
+            // Render updates to the console window (grid should now display COMPLETE)...
+            grid.Render();
+
+            // Wait for user to press a key... 
+            Console.ReadKey();
+
+            // Revert grid window size and buffer to normal
+            grid.RevertWindow();
+
+        }
+        public static Grid GenerateCell(LifeParams args)
+        {
+            Grid grid;
+            if (string.IsNullOrEmpty(args.FilePath))
+            {
+                // random
+                grid = new Grid(args.Rows, args.Colums);
+                int max = (int)(args.Random * 100);
+                for (int i = 0; i < args.Rows; i++)
+                {
+                    for (int p = 0; p < args.Colums; p++)
+                    {
+                        Random random = new Random();
+                        int next = random.Next(1, 101);
+                        if (next <= max) grid.UpdateCell(i, p, CellState.Full);
+                    }
+                }
+            }
+            else
+            {
+                // seed file
+                string filePath = args.FilePath;
+                var fparrs = filePath.Split(@"/");
+                string fileName = fparrs[fparrs.Length - 1];
+                var arrs = fileName.Split(".")[0].Split("_");
+                if(arrs.Length > 1)
+                {
+                    // has rows columns
+                    var rc = arrs[1].Split("x");
+                    args.Colums = int.Parse(rc[1]);
+                    args.Rows = int.Parse(rc[0]);
+                    Console.WriteLine($"{args.Rows} x {args.Colums}");
+                    //Console.ReadKey();
+                }
+                grid = new Grid(args.Rows, args.Colums);
+                GenerateCell(grid, filePath);
+            }
+            return grid;
+        }
+
+
+        public static void GenerateCell(Grid grid, string filePath)
+        {
+            TextReader reader = new StreamReader(@"C:\Users\admin\Desktop\ddddd\CAB201_2020S2_ProjectPartA_nXXXXXXXX\Seeds\figure-eight_14x14.seed");
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.StartsWith("#")) continue;
+                var arrs = line.Split(" ");
+                grid.UpdateCell(int.Parse(arrs[0]), int.Parse(arrs[1]), CellState.Full);
+            }
+        }
+
+        public void test1()
+        {
             int rows = 7, columns = 9;
             int[,] cells = {
                 { 5, 3 },
@@ -73,5 +156,6 @@ namespace Life
             // Revert grid window size and buffer to normal
             grid.RevertWindow();
         }
+
     }
 }
