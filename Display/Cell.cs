@@ -23,7 +23,8 @@
     public class Cell
     {
         private readonly char[] RENDER_CHARACTERS = new char[] {
-            '\u0020',   // ' '
+
+            '0',
             //'\u2588',   // '█'
             'T',
             '\u2593',   // '▓'

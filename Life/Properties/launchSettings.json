@@ -2,7 +2,7 @@
   "profiles": {
     "Life": {
       "commandName": "Project",
-      "commandLineArgs": "--random 0.1"
+      "commandLineArgs": "--random 1.2 ----max-update 5 --periodic --step"
     }
   }
 }

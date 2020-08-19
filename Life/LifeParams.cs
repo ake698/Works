@@ -7,8 +7,8 @@ namespace Life
     public class LifeParams
     {
         // 4- 48 --dimensions rows columns  start by 0
-        public int Rows = 17;
-        public int Colums = 17;
+        public int Rows = 16;
+        public int Colums = 16;
         // --periodic
         public bool Periodic = false;
         // --random random valid : 0-1
@@ -25,38 +25,75 @@ namespace Life
         public LifeParams(string[] args)
         {
             ParamsParse(args);
+            
             if (dic.ContainsKey("--dimensions"))
             {
-                int.TryParse(dic["--dimensions"][0], out Rows);
-                int.TryParse(dic["--dimensions"][1], out Colums);
+                int tempRows, tempColums;
+                int.TryParse(dic["--dimensions"][0], out tempRows);
+                int.TryParse(dic["--dimensions"][1], out tempColums);
+                if (tempRows < 4 || tempRows > 48 || tempColums < 4 || tempColums > 48)
+                {
+                    ConsoleErrorMsg("Dimensions: Integer values between 4 and 48 (inclusive)");
+                }
+                else
+                {
+                    Rows = tempRows;
+                    Colums = tempColums;
+                }
             }
-            if (Rows < 4 || Rows > 48 || Colums < 4 || Colums > 48) throw new ArgumentOutOfRangeException("dimensions error");
-            Rows--;Colums--;
+            
 
             Periodic = dic.ContainsKey("--periodic") ? true : false;
 
             if (dic.ContainsKey("--random"))
             {
-                decimal.TryParse(dic["--random"][0], out Random);
-                if (Random > 1) throw new ArgumentOutOfRangeException("random error");
+                decimal tempRandom;
+                decimal.TryParse(dic["--random"][0], out tempRandom);
+                if (tempRandom > 1)
+                {
+                    ConsoleErrorMsg("Random Factor: Floating point values between 0 and 1 (inclusive)");
+                }
+                else
+                {
+                    Random = tempRandom;
+                }
             }
 
             if (dic.ContainsKey("--seed"))
             {
                 FilePath = dic.ContainsKey("--seed") ? dic["--seed"][0] : null;
-                if (!FilePath.EndsWith(".seed")) throw new ArgumentOutOfRangeException("File Error");
+                if (!FilePath.EndsWith(".seed"))
+                {
+                    ConsoleErrorMsg("Input File: Valid paths with a .seed file extension ");
+                }
             }
 
             if (dic.ContainsKey("--generations"))
             {
-                int.TryParse(dic["--generations"][1], out Generations);
-                if (Generations < 0) throw new ArgumentOutOfRangeException("Generations Error");
+                int tempgen;
+                int.TryParse(dic["--generations"][1], out tempgen);
+                if (tempgen < 0)
+                {
+                    ConsoleErrorMsg("Generations: Integer values above 0");
+                }
+                else
+                {
+                    Generations = tempgen;
+                }
             }
 
             if (dic.ContainsKey("--max-update"))
             {
-                int.TryParse(dic["--max-update"][1], out Rate);
-                if (Rate < 1 || Rate > 30) throw new ArgumentOutOfRangeException("Rate Error");
+                int tempRate;
+                int.TryParse(dic["--max-update"][1], out tempRate);
+                if (tempRate < 1 || tempRate > 30)
+                {
+                    ConsoleErrorMsg("Update Rate: Floating point values between 1 and 30 (inclusive)");
+                }
+                else
+                {
+                    Rate = tempRate;
+                }
             }
 
 
@@ -84,6 +121,13 @@ namespace Life
                 }
             }
             if(!string.IsNullOrEmpty(key)) dic.Add(key, args);
+        }
+
+        private void ConsoleErrorMsg(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Warning  :{msg}");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

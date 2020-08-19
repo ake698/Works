@@ -10,6 +10,8 @@ namespace Life
         static void Main(string[] args)
         {
             LifeGenerate life = new LifeGenerate(args);
+            
+
             life.Start();
         }
         public static Grid GenerateCell(LifeParams args)
