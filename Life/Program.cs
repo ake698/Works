@@ -9,40 +9,8 @@ namespace Life
     {
         static void Main(string[] args)
         {
-            // The following is just an example of how to use the Display.Grid class
-            // Think of it as a "Hello World" program for using this small API
-            // If it works correctly, it should display a little smiley face cell
-            // by cell. The program will end after you press any key.
-
-            // Feel free to remove or modify it when you are comfortable with it.
-
-            // Specify grid dimensions and active cells...
-
-            LifeParams lifeParams = new LifeParams(args);
-
-            // Grid
-            Grid grid = GenerateCell(lifeParams);
-
-            // Wait for user to press a key...
-            Console.WriteLine("Press any key to start...");
-            //Console.ReadKey();
-            grid.InitializeWindow();
-
-            // Set the footnote (appears in the bottom left of the screen).
-            grid.SetFootnote("Smiley");
-
-            // Set complete marker as true
-            grid.IsComplete = true;
-
-            // Render updates to the console window (grid should now display COMPLETE)...
-            grid.Render();
-
-            // Wait for user to press a key... 
-            Console.ReadKey();
-
-            // Revert grid window size and buffer to normal
-            grid.RevertWindow();
-
+            LifeGenerate life = new LifeGenerate(args);
+            life.Start();
         }
         public static Grid GenerateCell(LifeParams args)
         {
@@ -84,7 +52,6 @@ namespace Life
             return grid;
         }
 
-
         public static void GenerateCell(Grid grid, string filePath)
         {
             TextReader reader = new StreamReader(@"C:\Users\admin\Desktop\ddddd\CAB201_2020S2_ProjectPartA_nXXXXXXXX\Seeds\figure-eight_14x14.seed");
@@ -96,6 +63,12 @@ namespace Life
                 grid.UpdateCell(int.Parse(arrs[0]), int.Parse(arrs[1]), CellState.Full);
             }
         }
+
+        public static void StartLife()
+        {
+
+        }
+
 
         public void test1()
         {

@@ -50,6 +50,11 @@
             this.state = state;
         }
 
+        public CellState GetState()
+        {
+            return state;
+        }
+
         /// <summary>
         /// Writes the cell to the buffer at the specified buffer coordinates 
         /// and cell size using the cells state character. 

@@ -284,5 +284,10 @@ namespace Display
             bufferHeight = TopMargin + BottomMargin + 2 * Border + CellHeight * rows;
             bufferWidth = LeftMargin + RightMargin + 2 * Border + CellWidth * cols;
         }
+
+        public Cell[][] GetCells()
+        {
+            return cells;
+        }
     }
 }

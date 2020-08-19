@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Life": {
+      "commandName": "Project",
+      "commandLineArgs": "--random 0.1"
+    }
+  }
+}

@@ -6,9 +6,9 @@ namespace Life
 {
     public class LifeParams
     {
-        // 4- 48 --dimensions rows columns
-        public int Rows = 16;
-        public int Colums = 16;
+        // 4- 48 --dimensions rows columns  start by 0
+        public int Rows = 17;
+        public int Colums = 17;
         // --periodic
         public bool Periodic = false;
         // --random random valid : 0-1
@@ -30,6 +30,8 @@ namespace Life
                 int.TryParse(dic["--dimensions"][0], out Rows);
                 int.TryParse(dic["--dimensions"][1], out Colums);
             }
+            if (Rows < 4 || Rows > 48 || Colums < 4 || Colums > 48) throw new ArgumentOutOfRangeException("dimensions error");
+            Rows--;Colums--;
 
             Periodic = dic.ContainsKey("--periodic") ? true : false;
 
