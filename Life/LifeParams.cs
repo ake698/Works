@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Life
@@ -59,23 +60,43 @@ namespace Life
 
         private void PopulateParms()
         {
-            if (dic.ContainsKey("--dimensions"))
+            if (dic.ContainsKey("--seed"))
             {
-                int tempRows, tempColums;
-                int.TryParse(dic["--dimensions"][0], out tempRows);
-                int.TryParse(dic["--dimensions"][1], out tempColums);
-                if (tempRows < 4 || tempRows > 48 || tempColums < 4 || tempColums > 48)
+                FilePath = dic.ContainsKey("--seed") ? dic["--seed"][0] : null;
+                
+                if (!FilePath.EndsWith(".seed"))
                 {
-                    ConsoleErrorMsg("Dimensions: Integer values between 4 and 48 (inclusive)");
+                    ConsoleErrorMsg("Input File: Valid paths with a .seed file extension ");
+                    FilePath = null;
                     paramBuild = false;
                 }
-                else
+                else if(!File.Exists(FilePath))
                 {
-                    Rows = tempRows;
-                    Colums = tempColums;
+                    ConsoleErrorMsg("Input File: No such file ");
+                    FilePath = null;
+                    paramBuild = false;
                 }
             }
 
+            if (dic.ContainsKey("--dimensions"))
+            {
+                if (dic["--dimensions"].Count == 2)
+                {
+                    int tempRows = Rows, tempColums = Colums;
+                    int.TryParse(dic["--dimensions"][0], out tempRows);
+                    int.TryParse(dic["--dimensions"][1], out tempColums);
+                    if (tempRows < 4 || tempRows > 48 || tempColums < 4 || tempColums > 48)
+                    {
+                        ConsoleErrorMsg("Dimensions: Integer values between 4 and 48 (inclusive)");
+                        paramBuild = false;
+                    }
+                    else
+                    {
+                        Rows = tempRows;
+                        Colums = tempColums;
+                    }
+                }
+            }
 
             Periodic = dic.ContainsKey("--periodic") ? true : false;
 
@@ -92,22 +113,12 @@ namespace Life
                 {
                     Random = tempRandom;
                 }
-            }
-
-            if (dic.ContainsKey("--seed"))
-            {
-                FilePath = dic.ContainsKey("--seed") ? dic["--seed"][0] : null;
-                if (!FilePath.EndsWith(".seed"))
-                {
-                    ConsoleErrorMsg("Input File: Valid paths with a .seed file extension ");
-                    paramBuild = false;
-                }
-            }
+            }    
 
             if (dic.ContainsKey("--generations"))
             {
                 int tempgen;
-                int.TryParse(dic["--generations"][1], out tempgen);
+                int.TryParse(dic["--generations"][0], out tempgen);
                 if (tempgen < 0)
                 {
                     ConsoleErrorMsg("Generations: Integer values above 0");
@@ -122,7 +133,7 @@ namespace Life
             if (dic.ContainsKey("--max-update"))
             {
                 int tempRate;
-                int.TryParse(dic["--max-update"][1], out tempRate);
+                int.TryParse(dic["--max-update"][0], out tempRate);
                 if (tempRate < 1 || tempRate > 30)
                 {
                     ConsoleErrorMsg("Update Rate: Floating point values between 1 and 30 (inclusive)");
@@ -141,14 +152,14 @@ namespace Life
         private void ConsoleErrorMsg(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}]Warning: {msg}");
+            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] Warning: {msg}");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
         private void ConsoleSuccessMsg(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}]Success: {msg}");
+            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] Success: {msg}");
             Console.ForegroundColor = ConsoleColor.White;
         }
     }
