@@ -23,9 +23,6 @@ namespace Life
 
         public void PrintParms()
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}]Success: Command line arguments processed.");
-            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}]The program will use the following settings:");
             Console.WriteLine();
             Console.WriteLine($"\t\t Input File: {lifeParams.FilePath??"N/A"}");
@@ -46,13 +43,11 @@ namespace Life
         public void Start()
         {
             grid.InitializeWindow();
-
-            // Set the footnote (appears in the bottom left of the screen).
             grid.SetFootnote("Smiley");
             grid.Render();
             Console.ReadKey();
+
             Stopwatch watch = new Stopwatch();
-            
             for (int i = 1; i <= lifeParams.Generations; i++)
             {
                 watch.Restart();
@@ -70,11 +65,9 @@ namespace Life
                     
                 }
             }
-
             End();
 
         }
-
 
         private void End()
         {
@@ -83,13 +76,14 @@ namespace Life
             grid.Render();
             Console.ReadKey();
 
-            // normal
+            // go back
             grid.RevertWindow();
             Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}]Press spacebar to close program...");
             Console.ReadKey();
         }
+
+
         #region Generate
-        
         private void NextGenerate()
         {
             List<int[]> list = new List<int[]>();
@@ -118,7 +112,6 @@ namespace Life
 
             list.ForEach(x => grid.UpdateCell(x[0], x[1], CellState.Full));
         }
-
 
         private bool LiveOrDead(int x, int y, CellState state)
         {
@@ -191,6 +184,7 @@ namespace Life
         }
 
         #endregion
+
 
         #region DataSeed
         private Grid GenerateCell(LifeParams args)
