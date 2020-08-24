@@ -24,9 +24,8 @@
     {
         private readonly char[] RENDER_CHARACTERS = new char[] {
 
-            '0',
-            //'\u2588',   // '█'
-            'T',
+            '\u0020',   // ' '
+            '\u2588',   // '█'
             '\u2593',   // '▓'
             '\u2592',   // '▒'
             '\u2591'    // '░'

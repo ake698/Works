@@ -20,13 +20,13 @@ namespace Life
             // Initialization grid
             grid = GenerateCell(lifeParams);
             cells = grid.GetCells();
-            PrintParms();
+            PrintParams();
         }
 
         /// <summary>
         /// Display the runtime settings
         /// </summary>
-        private void PrintParms()
+        private void PrintParams()
         {
             Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] The program will use the following settings:");
             Console.WriteLine();

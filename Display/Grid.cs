@@ -16,7 +16,7 @@ namespace Display
         private const int LeftMargin = 2;
         private const int RightMargin = 0;
         private const int Border = 1;
-        private const int CellWidth = 1;
+        private const int CellWidth = 2;
         private const int CellHeight = 1;
         private const int MinSize = 4;
         private const int MaxSize = 48;
@@ -38,13 +38,13 @@ namespace Display
 
         public bool IsComplete { get; set; }
 
-        //#if WINDOWS
+#if WINDOWS
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
-        //#else
-        //[DllImport("libc")]
-        //private static extern int system(string exec);
-        //#endif
+#else
+        [DllImport("libc")]
+        private static extern int system(string exec);
+#endif
 
         /// ------------------------------------------------------------
         /// Public Methods. These CAN be called from your program.
@@ -95,14 +95,14 @@ namespace Display
             storedBufferHeight = Console.BufferHeight;
 
             Console.CursorVisible = false;
-            
-            //#if WINDOWS
+
+#if WINDOWS
             Console.SetWindowSize(bufferWidth + 1, bufferHeight + 1);
             Console.SetBufferSize(bufferWidth + 1, bufferHeight + 1);
-            //#else
-            //system($@"printf '\e[8;{bufferHeight + 1};{bufferWidth + 1}t'");
-            //#endif
-            
+#else
+            system($@"printf '\e[8;{bufferHeight + 1};{bufferWidth + 1}t'");
+#endif
+
             Console.Clear();
         }
 
@@ -114,14 +114,14 @@ namespace Display
             Console.Clear();
 
             Console.CursorVisible = true;
-            
-            //#if WINDOWS
+
+#if WINDOWS
             Console.SetWindowSize(storedWindowWidth, storedWindowHeight);
             Console.SetBufferSize(storedBufferWidth, storedBufferHeight);
-            //#else
-            //system($@"printf '\e[8;{storedBufferHeight};{storedBufferWidth}t'");
-            //#endif
-            
+#else
+            system($@"printf '\e[8;{storedBufferHeight};{storedBufferWidth}t'");
+#endif
+
             Console.Clear();
         }
 
