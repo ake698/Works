@@ -60,7 +60,7 @@ namespace Bank
         public bool DeductFunds ( decimal amount )
         {
             // INSERT CODE HERE
-            if(funds >= amount)
+            if(funds > amount)
             {
                 funds -= amount;
                 return true;
@@ -125,7 +125,7 @@ namespace Bank
         ///     Interactively queries user for deposit amount, withdrawal amount,
         ///     and interest rate, applies operation and displays results.
         /// </summary>
-        public static void Main ()
+        public static void main ()
         {
             BankAccount acct = new BankAccount();
             bool finished = false;

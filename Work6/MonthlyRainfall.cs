@@ -36,7 +36,7 @@ namespace WeatherAnalysis
         ///     data. Otherwise, the program will use hard-coded data defined
         ///     in-line in the code.
         /// </param>
-        public static void main(string[] args)
+        public static void Main(string[] args)
         {
             if (args.Length >= 2)
             {
@@ -78,7 +78,7 @@ namespace WeatherAnalysis
         // INSERT METHOD HERE. 
         public static void MonthlyRainfallSummary(TextReader reader, TextWriter writer)
         {
-            writer.WriteLine("Month,TotalRainfall(mm),AverageRainfall(mm/day),MaximimDailyRainfall(mm),MissingData(%)");
+            writer.WriteLine("Month,TotalRainfall(mm),AverageRainfall(mm/day),MaximumDailyRainfall(mm),MissingData(%)");
 
             string line;
             int month = 1;
@@ -95,7 +95,7 @@ namespace WeatherAnalysis
                 {
                     continue;
                 }
-                monthCount++;
+                
                 var arrs = line.Split(",");
 
                 int curMonth = int.Parse(arrs[3]);
@@ -111,7 +111,11 @@ namespace WeatherAnalysis
                     record = 0;
                     total = average = max = miss = 0;
                     month = curMonth;
+                    monthCount = 0;
                 }
+
+                monthCount++;
+
                 string rainStr = arrs[5];
                 decimal rainAmount = 0;
 
@@ -129,10 +133,19 @@ namespace WeatherAnalysis
                 }
             };
 
+            average = Math.Round(total / record, 2);
+            miss = Math.Round((miss / (monthCount)) * 100, 2);
+            monthRain[11] = new string[]
+                    {
+                        Enum.GetName(typeof(Month), month), total.ToString("#0.00"),
+                        average.ToString("#0.00"), max.ToString("#0.00"), miss.ToString("#0.00")
+                    };
+
             for (int i = 0; i < monthRain.Length; i++)
             {
                 writer.WriteLine(string.Join(",", monthRain[i]));
             }
         }
+
     }
 }
