@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Work6": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\\\Users\\\\sq\\\\Desktop\\\\11\\\\Rainfall\\\\Data\\\\IDCJAC0009_040913_2019_Data.csv C:\\\\Users\\\\sq\\\\Desktop\\\\11\\\\Rainfall\\\\tt.csv"
+    }
+  }
+}
