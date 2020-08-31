@@ -171,7 +171,7 @@ namespace Simulation
         ///     Interactively queries user for deposit amount, withdrawal amount,
         ///     and interest rate, applies operation and displays results.
         /// </summary>
-        public static void Main ()
+        public static void Main()
         {
             Random generator = new Random(927137);
             int numDice = 2;
@@ -179,34 +179,34 @@ namespace Simulation
             Dice dice = new Dice(generator, numDice, numFaces);
             bool finished = false;
 
-            while ( !finished )
+            while (!finished)
             {
-                Write( menu );
+                Write(menu);
                 var line = ReadLine();
 
-                if ( line == null ) break;
+                if (line == null) break;
 
-                var fields = line.Trim().ToLower().Split( ' ' );
+                var fields = line.Trim().ToLower().Split(' ');
 
-                if ( fields.Length > 0 && fields[0].Length > 0 )
+                if (fields.Length > 0 && fields[0].Length > 0)
                 {
-                    switch ( fields[0][0] )
+                    switch (fields[0][0])
                     {
                         case 'd':
-                            switch ( fields.Length )
+                            switch (fields.Length)
                             {
                                 case 1:
                                     numDice = 2;
-                                    dice = new Dice( generator, numDice );
+                                    dice = new Dice(generator, numDice);
                                     break;
                                 case 2:
-                                    numDice = int.Parse( fields[1] );
-                                    dice = new Dice( generator, numDice );
+                                    numDice = int.Parse(fields[1]);
+                                    dice = new Dice(generator, numDice);
                                     break;
                                 case 3:
-                                    numDice = int.Parse( fields[1] );
-                                    numFaces = int.Parse( fields[2] );
-                                    dice = new Dice( generator, numDice, numFaces );
+                                    numDice = int.Parse(fields[1]);
+                                    numFaces = int.Parse(fields[2]);
+                                    dice = new Dice(generator, numDice, numFaces);
                                     break;
                                 default:
                                     break;
@@ -223,10 +223,10 @@ namespace Simulation
                     }
                 }
 
-                if ( !finished )
+                if (!finished)
                 {
                     int currTotal = dice.GetFaceValue();
-                    WriteLine( $"After operation: current total = {currTotal}" );
+                    WriteLine($"After operation: current total = {currTotal}");
                 }
             }
         }
