@@ -2,7 +2,7 @@
   "profiles": {
     "Life": {
       "commandName": "Project",
-      "commandLineArgs": "--dimensions 60 50  --generations 10 --random 0.9"
+      "commandLineArgs": "--max-update 15 --seed dafds"
     }
   }
 }
