@@ -4,18 +4,24 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace GoogleChrome
 {
-    public class Work : IDisposable
+    public partial class Work : IDisposable
     {
+
+        public Action<bool> UpdateButtonAction;
+        public Action<string> PrintLogAction;
+        public Action<int> FinishTaskViewAction;
+        public Action<int, int, int> UpdateTaskViewCountAction;
+
+
         private ChromeDriver _driver;
-        private string[] _keys;
+        private List<string> _keys;
         // 点击快照数量
         private int _clickSnapCount = 1;
         // 快照页面停留时间
@@ -25,28 +31,40 @@ namespace GoogleChrome
         // 广告页面停留时间
         private int _stayADTime = 2;
         // 搜索页面停留时间
-        private int _staySearchTie = 3;
+        private int _staySearchTime = 3;
 
-        public Work(string[] keys)
+
+        public Work(List<string> keys)
         {
-            
-
             _keys = keys;
+            Random rnd = new Random();
+            _clickADCount = rnd.Next(Setting.AdClickMin, Setting.AdClickMax + 1);
+            _stayADTime = rnd.Next(Setting.AdStayMin, Setting.AdStayMax + 1);
+            _clickSnapCount = rnd.Next(Setting.SnapClickMin, Setting.SnapClickMax + 1);
+            _staySnapTime = rnd.Next(Setting.SnapStayMin, Setting.SnapStayMax + 1);
+            _staySearchTime = rnd.Next(Setting.SearchStayMin, Setting.SearchStayMax + 1);
         }
 
         public void Dispose()
         {
             _driver.Quit();
+            
         }
 
         public void Start()
         {
-            foreach (var key in _keys)
+            for (int i = 0; i < _keys.Count; i++)
             {
+                if (!Setting.Running) break;
+                // 更新点击数量
+                UpdateTaskViewCountAction(i, _clickADCount, _clickSnapCount);
                 InitChrome();
-                SearchKey(key);
+                SearchKey(_keys[i]);
+                // 更新状态
+                FinishTaskViewAction(i);
                 Dispose();
             }
+            UpdateButtonAction(false);
         }
 
         private void InitChrome()
@@ -62,6 +80,7 @@ namespace GoogleChrome
 
         private void SearchKey(string key)
         {
+            PrintLogAction($"开始关键词 {key} 操作...");
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
             _driver.Navigate().GoToUrl("https://www.baidu.com/");
@@ -78,13 +97,15 @@ namespace GoogleChrome
             {
                 return _driver.FindElementById("content_left");
             });
-            Thread.Sleep(_staySearchTie * 1000);
+            PrintLogAction($"搜索页面停留 {_staySearchTime}秒...");
+            Thread.Sleep(_staySearchTime * 1000);
             var pmds = content.FindElements(By.ClassName("new-pmd"));
             var currentPage = _driver.CurrentWindowHandle;
             int currentAdCount = 0;
             int currentSnapCount = 0;
             foreach (var pmd in pmds)
             {
+                if (!Setting.Running) break;
                 bool? flag = null;
                 try
                 {
@@ -108,7 +129,7 @@ namespace GoogleChrome
                 if (!flag.HasValue) continue;
                 if (flag.Value && ++currentAdCount > _clickADCount) continue;
                 if (!flag.Value && ++currentSnapCount > _clickSnapCount) continue;
-
+                //PrintLogAction($"ad--{currentAdCount},snap--{currentSnapCount}");
 
                 var currentTag = pmd.Text;
                 Debug.WriteLine(currentTag);
@@ -122,7 +143,9 @@ namespace GoogleChrome
                 {
                     link = pmd.FindElement(By.PartialLinkText(key));
                 }
+                string type = flag == true ? "广告" : "快照";
 
+                PrintLogAction($"匹配到{type},{link.Text},准备进入...");
                 try
                 {
                     link.Click();
@@ -133,10 +156,6 @@ namespace GoogleChrome
                 }
                 StayAdPage(flag.Value);
                 _driver.SwitchTo().Window(currentPage);
-
-
-
-                
             }
         }
 

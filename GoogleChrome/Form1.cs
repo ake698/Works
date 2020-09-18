@@ -1,15 +1,7 @@
-﻿using OpenQA.Selenium.Chrome;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GoogleChrome
@@ -18,31 +10,99 @@ namespace GoogleChrome
     {
         private Thread chromeThread;
         private Work work;
+        private List<string> keys;
         public Form1()
         {
             InitializeComponent();
+            InitListView();
         }
+
+        private void InitListView()
+        {
+            taskView.Clear();
+            keys = LoadKeys();
+            taskView.View = View.Details;
+            taskView.GridLines = true;
+            taskView.LabelEdit = false;
+            taskView.FullRowSelect = true;
+            taskView.Columns.Add("编号", 50);
+            taskView.Columns.Add("关键词", 150);
+            taskView.Columns.Add("广告数量", 100);
+            taskView.Columns.Add("快照数量", 100);
+            taskView.Columns.Add("是否完成", 150);
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var item = new ListViewItem($"NO.{i + 1}");
+                item.SubItems.Add(keys[i]);
+                item.SubItems.Add($"{Setting.AdClickMin}-{Setting.AdClickMax}");
+                item.SubItems.Add($"{Setting.SnapStayMin}-{Setting.SnapStayMax}");
+                item.SubItems.Add("未完成");
+                taskView.Items.Add(item);
+            }
+        }
+
+        private List<string> LoadKeys()
+        {
+            Utils.FileHanler();
+            FileStream keyFileStream = new FileStream(Setting.KeyPath, FileMode.Open, FileAccess.Read);
+            StreamReader keyReader = new StreamReader(keyFileStream);
+            keys = new List<string>();
+            string line;
+            while ((line = keyReader.ReadLine()) != null)
+            {
+                keys.Add(line.Trim());
+            }
+            keyReader.Close();
+            keyFileStream.Close();
+            if (!Setting.Normal)
+            {
+                Random rnd = new Random();
+                int rndIndex = rnd.Next(0, keys.Count);
+                string rndKey = keys[rndIndex];
+                keys.Clear();
+                keys.Add(rndKey);
+            }
+            return keys;
+        }
+
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            work = new Work(new string[] { "我","教师"});
+            InitListView();
+            Setting.Running = true;
+            if (keys.Count < 1)
+            {
+                MessageBox.Show("请在设置中添加相应的关键字！", "错误");
+                return;
+            }
+            // 开始运行
+            UpdateButtonAction(true);
+
+            work = new Work(keys);
+            work.UpdateButtonAction = UpdateButtonAsync;
+            work.PrintLogAction = PrintLogAsync;
+            work.FinishTaskViewAction = FinishTaskViewAsync;
+            work.UpdateTaskViewCountAction = UpdateTaskCountViewAsync;
             chromeThread = new Thread(new ThreadStart(work.Start));
             chromeThread.Start();
         }
 
 
-        private void stop_button_Click(object sender, EventArgs e)
+        private void load_button_Click(object sender, EventArgs e)
         {
-            chromeThread.Abort();
-            work.Dispose();
-            MessageBox.Show("ddd");
+            InitListView();
         }
 
         private void close_button_Click(object sender, EventArgs e)
         {
-            chromeThread.Abort();
-            work.Dispose();
-            MessageBox.Show("停止成功");
+            Setting.Running = false;
         }
+
+        private void setting_button_Click(object sender, EventArgs e)
+        {
+            new SettingForm().ShowDialog();
+        }
+
+        
     }
 }
