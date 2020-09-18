@@ -14,13 +14,14 @@ namespace GoogleChrome
         public Form1()
         {
             InitializeComponent();
+            // 初始化任务
             InitListView();
         }
 
         private void InitListView()
         {
             taskView.Clear();
-            keys = LoadKeys();
+            keys = Utils.LoadKeys();
             taskView.View = View.Details;
             taskView.GridLines = true;
             taskView.LabelEdit = false;
@@ -35,35 +36,12 @@ namespace GoogleChrome
                 var item = new ListViewItem($"NO.{i + 1}");
                 item.SubItems.Add(keys[i]);
                 item.SubItems.Add($"{Setting.AdClickMin}-{Setting.AdClickMax}");
-                item.SubItems.Add($"{Setting.SnapStayMin}-{Setting.SnapStayMax}");
+                item.SubItems.Add($"{Setting.SnapClickMin}-{Setting.SnapClickMax}");
                 item.SubItems.Add("未完成");
                 taskView.Items.Add(item);
             }
         }
 
-        private List<string> LoadKeys()
-        {
-            Utils.FileHanler();
-            FileStream keyFileStream = new FileStream(Setting.KeyPath, FileMode.Open, FileAccess.Read);
-            StreamReader keyReader = new StreamReader(keyFileStream);
-            keys = new List<string>();
-            string line;
-            while ((line = keyReader.ReadLine()) != null)
-            {
-                keys.Add(line.Trim());
-            }
-            keyReader.Close();
-            keyFileStream.Close();
-            if (!Setting.Normal)
-            {
-                Random rnd = new Random();
-                int rndIndex = rnd.Next(0, keys.Count);
-                string rndKey = keys[rndIndex];
-                keys.Clear();
-                keys.Add(rndKey);
-            }
-            return keys;
-        }
 
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -84,6 +62,7 @@ namespace GoogleChrome
             work.FinishTaskViewAction = FinishTaskViewAsync;
             work.UpdateTaskViewCountAction = UpdateTaskCountViewAsync;
             chromeThread = new Thread(new ThreadStart(work.Start));
+            //chromeThread = new Thread(new ThreadStart(work.ChangeIP));
             chromeThread.Start();
         }
 
@@ -95,12 +74,16 @@ namespace GoogleChrome
 
         private void close_button_Click(object sender, EventArgs e)
         {
+            chromeThread.Abort();
             Setting.Running = false;
+            UpdateButtonAction(false);
         }
 
         private void setting_button_Click(object sender, EventArgs e)
         {
+            this.TopMost = false;
             new SettingForm().ShowDialog();
+            this.TopMost = true;
         }
 
         

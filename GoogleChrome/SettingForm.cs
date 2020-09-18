@@ -26,6 +26,10 @@ namespace GoogleChrome
             ad_staytime_input2.Text = Setting.AdStayMax.ToString();
             snap_staytime_input1.Text = Setting.SnapStayMin.ToString();
             snap_staytime_input2.Text = Setting.SnapStayMax.ToString();
+            snap_click_input1.Text = Setting.SnapClickMin.ToString();
+            snap_click_input2.Text = Setting.SnapClickMax.ToString();
+            Utils.LoadKeys();
+            key_count_label.Text = Setting.KeyCount.ToString();
         }
 
 
@@ -46,12 +50,16 @@ namespace GoogleChrome
             Setting.DisConnectStay = GetIntSettingValue(disconnect_staytime_input);
             Setting.SearchStayMin = GetIntSettingValue(search_staytime_input1);
             Setting.SearchStayMax = GetIntSettingValue(search_staytime_input2, Setting.SearchStayMin);
+
             Setting.AdClickMin = GetIntSettingValue(ad_click_input1);
             Setting.AdClickMax = GetIntSettingValue(ad_click_input2, Setting.AdClickMin);
             Setting.AdStayMin = GetIntSettingValue(ad_staytime_input1);
             Setting.AdStayMax = GetIntSettingValue(ad_staytime_input2, Setting.AdStayMin);
+
             Setting.SnapStayMin = GetIntSettingValue(snap_staytime_input1);
             Setting.SnapStayMax = GetIntSettingValue(snap_staytime_input2, Setting.SnapStayMin);
+            Setting.SnapClickMin = GetIntSettingValue(snap_click_input1);
+            Setting.SnapClickMax = GetIntSettingValue(snap_click_input2, Setting.SnapClickMin);
 
             if (random_radio.Checked) Setting.Normal = false;
 
@@ -68,8 +76,14 @@ namespace GoogleChrome
 
         private void edit_button_Click(object sender, EventArgs e)
         {
-            Utils.FileHanler();
-            Utils.Execute($"notepad {Setting.KeyPath}");
+            Utils.FileHanler(Setting.KeyFileName);
+            Utils.ExecuteCommand($"notepad {Setting.KeyPath}");
+        }
+
+        private void count_button_Click(object sender, EventArgs e)
+        {
+            Utils.LoadKeys();
+            key_count_label.Text = Setting.KeyCount.ToString();
         }
     }
 }

@@ -99,6 +99,7 @@ namespace GoogleChrome
             // 
             // logBox
             // 
+            this.logBox.Font = new System.Drawing.Font("宋体", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.logBox.Location = new System.Drawing.Point(3, 111);
             this.logBox.Name = "logBox";
             this.logBox.Size = new System.Drawing.Size(195, 230);
@@ -129,6 +130,7 @@ namespace GoogleChrome
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "点击精灵";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.button_group.ResumeLayout(false);
             this.ResumeLayout(false);

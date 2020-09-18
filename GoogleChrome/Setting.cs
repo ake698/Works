@@ -9,9 +9,22 @@ namespace GoogleChrome
 {
     public class Setting
     {
-        public static string KeyDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToString(), "setting");
+
+        #region 文件类配置
+        public static string Dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToString(), "setting");
+
         public const string KeyFileName = "KeySetting.txt";
-        public static string KeyPath { get { return Path.Combine(KeyDir, KeyFileName); } }
+        public static string KeyPath { get { return Path.Combine(Dir, KeyFileName); } }
+        public static int KeyCount { get; set; } = 0;
+
+        public const string UAFileName = "UA.txt";
+        public static string UAPath { get { return Path.Combine(Dir, UAFileName); } }
+        public static List<string> UAs = null;
+
+        public static string IPFileName = "IP.txt";
+        public static string IPPath { get { return Path.Combine(Dir, IPFileName); } }
+        #endregion
+        public const string Auth = "http://119.29.79.210/";
         public static bool Running { get; set; } = true;
 
         public static string ADSL { get; set; } = "adsl";

@@ -4,7 +4,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -37,12 +36,7 @@ namespace GoogleChrome
         public Work(List<string> keys)
         {
             _keys = keys;
-            Random rnd = new Random();
-            _clickADCount = rnd.Next(Setting.AdClickMin, Setting.AdClickMax + 1);
-            _stayADTime = rnd.Next(Setting.AdStayMin, Setting.AdStayMax + 1);
-            _clickSnapCount = rnd.Next(Setting.SnapClickMin, Setting.SnapClickMax + 1);
-            _staySnapTime = rnd.Next(Setting.SnapStayMin, Setting.SnapStayMax + 1);
-            _staySearchTime = rnd.Next(Setting.SearchStayMin, Setting.SearchStayMax + 1);
+            RandomSetting();
         }
 
         public void Dispose()
@@ -51,20 +45,34 @@ namespace GoogleChrome
             
         }
 
+        private void RandomSetting()
+        {
+            Random rnd = new Random();
+            _clickADCount = rnd.Next(Setting.AdClickMin, Setting.AdClickMax + 1);
+            _stayADTime = rnd.Next(Setting.AdStayMin, Setting.AdStayMax + 1);
+            _clickSnapCount = rnd.Next(Setting.SnapClickMin, Setting.SnapClickMax + 1);
+            _staySnapTime = rnd.Next(Setting.SnapStayMin, Setting.SnapStayMax + 1);
+            _staySearchTime = rnd.Next(Setting.SearchStayMin, Setting.SearchStayMax + 1);
+        }
+
         public void Start()
         {
             for (int i = 0; i < _keys.Count; i++)
             {
                 if (!Setting.Running) break;
+                // 随机更新参数
+                RandomSetting();
                 // 更新点击数量
                 UpdateTaskViewCountAction(i, _clickADCount, _clickSnapCount);
                 InitChrome();
+                Setting.Running = Utils.CheckAuth();
                 SearchKey(_keys[i]);
-                // 更新状态
                 FinishTaskViewAction(i);
                 Dispose();
+                PrintLogAction($"{_keys[i]} 点击完成");
             }
             UpdateButtonAction(false);
+            PrintLogAction("所有任务完成...");
         }
 
         private void InitChrome()
@@ -72,6 +80,7 @@ namespace GoogleChrome
             var option = new ChromeOptions();
             option.AddArgument("--incognito");
             option.AddArgument("--disable-infobars");
+            option.AddArgument(string.Format("--user-agent={0}", Utils.GetRandomUA()));
             string driverDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToString(), "driver2");
             ChromeDriverService service = ChromeDriverService.CreateDefaultService(driverDir);
             service.HideCommandPromptWindow = true;
@@ -135,9 +144,11 @@ namespace GoogleChrome
                 Debug.WriteLine(currentTag);
 
                 IWebElement link = null;
+                //Debug.WriteLine(pmd.GetAttribute("outerHTML"));
+
                 try
                 {
-                    link = pmd.FindElement(By.XPath("div/*/a"));
+                    link = pmd.FindElement( flag.Value == true ? By.XPath("div/*/a"): By.XPath("h3/a"));
                 }
                 catch
                 {

@@ -105,7 +105,7 @@
             // random_radio
             // 
             this.random_radio.AutoSize = true;
-            this.random_radio.Location = new System.Drawing.Point(7, 173);
+            this.random_radio.Location = new System.Drawing.Point(6, 170);
             this.random_radio.Name = "random_radio";
             this.random_radio.Size = new System.Drawing.Size(71, 16);
             this.random_radio.TabIndex = 5;
@@ -117,7 +117,7 @@
             // 
             this.normal_radio.AutoSize = true;
             this.normal_radio.Checked = true;
-            this.normal_radio.Location = new System.Drawing.Point(7, 136);
+            this.normal_radio.Location = new System.Drawing.Point(7, 125);
             this.normal_radio.Name = "normal_radio";
             this.normal_radio.Size = new System.Drawing.Size(71, 16);
             this.normal_radio.TabIndex = 4;
@@ -147,6 +147,7 @@
             this.count_button.TabIndex = 2;
             this.count_button.Text = "统计数量";
             this.count_button.UseVisualStyleBackColor = true;
+            this.count_button.Click += new System.EventHandler(this.count_button_Click);
             // 
             // label1
             // 

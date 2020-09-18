@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 
 namespace GoogleChrome
 {
     public class Utils
     {
-        public static void Execute(string command)
+
+        public static void ExecuteCommand(string command)
         {
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -22,7 +25,7 @@ namespace GoogleChrome
 
         
 
-        public static string ExecuteWithResult(string command)
+        public static string ExecuteCommandWithResult(string command)
         {
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -38,16 +41,125 @@ namespace GoogleChrome
             return cmd.StandardOutput.ReadToEnd();
         }
 
-
-        public static void FileHanler()
+        #region 文件类工具
+        public static void FileHanler(string fileName)
         {
-            if (!Directory.Exists(Setting.KeyDir))
+            if (!Directory.Exists(Setting.Dir))
             {
-                Directory.CreateDirectory(Setting.KeyDir);
+                Directory.CreateDirectory(Setting.Dir);
             }
-            if (!File.Exists(Setting.KeyPath))
+            string path = Path.Combine(Setting.Dir, fileName);
+            if (!File.Exists(path))
             {
-                File.Create(Setting.KeyPath);
+                File.Create(path);
+            }
+        }
+
+
+        public static List<string> LoadKeys()
+        {
+            FileHanler(Setting.KeyFileName);
+            Setting.KeyCount = 0;
+            FileStream keyFileStream = new FileStream(Setting.KeyPath, FileMode.Open, FileAccess.Read);
+            StreamReader keyReader = new StreamReader(keyFileStream, System.Text.Encoding.Default);
+            var keys = new List<string>();
+            string line;
+            while ((line = keyReader.ReadLine()) != null)
+            {
+                keys.Add(line.Trim());
+                Setting.KeyCount += 1;
+            }
+            keyReader.Close();
+            keyFileStream.Close();
+            if (!Setting.Normal)
+            {
+                Random rnd = new Random();
+                int rndIndex = rnd.Next(0, keys.Count);
+                string rndKey = keys[rndIndex];
+                keys.Clear();
+                keys.Add(rndKey);
+            }
+            return keys;
+        }
+
+        public static bool CheckAuth()
+        {
+            try
+            {
+                HttpGet(Setting.Auth);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static List<string> LoadUA()
+        {
+            FileHanler(Setting.UAFileName);
+            FileStream stream = new FileStream(Setting.UAPath, FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream, System.Text.Encoding.Default);
+            var uas = new List<string>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                uas.Add(line.Trim());
+            }
+            reader.Close();
+            stream.Close();
+            return uas;
+        }
+
+        public static string GetRandomUA()
+        {
+            if (Setting.UAs == null )
+                Setting.UAs = LoadUA();
+            if(Setting.UAs.Count < 1)
+                return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36";
+
+            Random rnd = new Random();
+            int index = rnd.Next(0, Setting.UAs.Count);
+            return Setting.UAs[index];
+        }
+
+        public static List<string> GetIPList()
+        {
+            FileHanler(Setting.IPFileName);
+            FileStream stream = new FileStream(Setting.IPPath, FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream, System.Text.Encoding.Default);
+            var ips = new List<string>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                ips.Add(line.Trim());
+            }
+            reader.Close();
+            stream.Close();
+            return ips;
+        }
+
+        public static void AddUsedIP(string ip)
+        {
+            FileStream stream = new FileStream(Setting.IPPath, FileMode.Append);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(ip);
+            writer.Close();
+            stream.Close();
+        }
+        #endregion
+
+        public static string HttpGet(string url)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.UserAgent = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Mobile Safari/537.36";
+            request.Method = "GET";
+            request.Accept = "application/json, text/plain, */*";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            using (StreamReader reader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.Default))
+            {
+                string result = reader.ReadToEnd();
+                return result;
             }
         }
     }
