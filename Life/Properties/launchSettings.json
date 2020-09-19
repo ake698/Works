@@ -2,7 +2,7 @@
   "profiles": {
     "Life": {
       "commandName": "Project",
-      "commandLineArgs": "--max-update 15 --seed dafds"
+      "commandLineArgs": "--max-update 15 --seed Seeds/figure-eight_14x14.seed"
     }
   }
 }
