@@ -204,7 +204,7 @@ namespace GoogleChrome
                     break;
                 }
 
-        }
+            }
             Thread.Sleep(1000);
         }
 

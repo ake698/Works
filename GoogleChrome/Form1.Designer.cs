@@ -105,6 +105,7 @@ namespace GoogleChrome
             this.logBox.Size = new System.Drawing.Size(195, 230);
             this.logBox.TabIndex = 6;
             this.logBox.Text = "";
+            this.logBox.TextChanged += new System.EventHandler(this.logBox_TextChanged);
             // 
             // taskView
             // 

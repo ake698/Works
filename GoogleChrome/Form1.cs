@@ -91,6 +91,9 @@ namespace GoogleChrome
             this.TopMost = true;
         }
 
-        
+        private void logBox_TextChanged(object sender, EventArgs e)
+        {
+            logBox.ScrollToCaret();
+        }
     }
 }
