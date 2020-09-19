@@ -15,8 +15,7 @@ namespace GoogleChrome
 
         public Action<bool> UpdateButtonAction;
         public Action<string> PrintLogAction;
-        public Action<int> FinishTaskViewAction;
-        public Action<int, int, int> UpdateTaskViewCountAction;
+        public Action<int, int, string> AddTaskListViewAction;
 
 
         private ChromeDriver _driver;
@@ -31,6 +30,10 @@ namespace GoogleChrome
         private int _stayADTime = 2;
         // 搜索页面停留时间
         private int _staySearchTime = 3;
+        // 一次点击的数量
+        private int _adClickCount = 0;
+        // 已经点击的数量
+        private int _gloablCount = 0;
 
 
         public Work(List<string> keys)
@@ -41,8 +44,8 @@ namespace GoogleChrome
 
         public void Dispose()
         {
-            _driver.Quit();
-            
+            if (_driver != null) _driver.Quit();
+            PrintLogAction("程序关闭!");
         }
 
         private void RandomSetting()
@@ -57,28 +60,27 @@ namespace GoogleChrome
 
         public void Start()
         {
-            
-            for (int i = 0; i < _keys.Count; i++)
+
+            for (int i = 1; i < int.MaxValue; i++)
             {
                 // 更新IP
                 ChangeIP();
                 // 随机更新参数
                 RandomSetting();
-                // 更新点击数量
-                UpdateTaskViewCountAction(i, _clickADCount, _clickSnapCount);
-                try
-                {
-                    InitChrome();
-                }catch(Exception e)
-                {
-                    PrintLogAction(e.Message);
-                }
+                // 初始化Chrome
+                InitChrome();
                 Setting.Running = Utils.CheckAuth();
-                SearchKey(_keys[i]);
-                FinishTaskViewAction(i);
+                string key = _keys[i % _keys.Count];
+                if (!Setting.Normal)
+                {
+                    key = _keys[Utils.GetRandomNumber(_keys.Count)];
+                }
+                SearchKey(key);
                 Dispose();
-                PrintLogAction($"{_keys[i]} 点击完成");
+                AddTaskListViewAction(i, _adClickCount, key);
+                _adClickCount = 0;
                 if (!Setting.Running) break;
+                PrintLogAction($"{key} 点击完成");
             }
             UpdateButtonAction(false);
             PrintLogAction("所有任务完成...");
@@ -166,7 +168,19 @@ namespace GoogleChrome
                 {
                     link = pmd.FindElement(By.PartialLinkText(key));
                 }
-                string type = flag == true ? "广告" : "快照";
+
+                string type  = "快照";
+                if (flag.Value)
+                {
+                    type = "广告";
+                    _adClickCount++;
+                    _gloablCount++;
+                }
+                if(_gloablCount >= Setting.GlobalCount)
+                {
+                    Setting.Running = false;
+                    break;
+                }
 
                 PrintLogAction($"匹配到{type},{link.Text},准备进入...");
                 try

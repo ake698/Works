@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
             this.task_setting = new System.Windows.Forms.GroupBox();
-            this.grep_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.key_count_label = new System.Windows.Forms.Label();
             this.random_radio = new System.Windows.Forms.RadioButton();
             this.normal_radio = new System.Windows.Forms.RadioButton();
@@ -38,7 +37,12 @@
             this.count_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.edit_button = new System.Windows.Forms.Button();
+            this.grep_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.adsl_setting = new System.Windows.Forms.GroupBox();
+            this.gloable_count_input = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.search_from_input = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.snap_staytime_input2 = new System.Windows.Forms.TextBox();
             this.snap_staytime_input1 = new System.Windows.Forms.TextBox();
@@ -74,11 +78,9 @@
             this.cancel_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
             this.ip_gourp = new System.Windows.Forms.GroupBox();
-            this.grep_ip_input = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.search_from_input = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.grep_ip_input = new System.Windows.Forms.TextBox();
             this.task_setting.SuspendLayout();
             this.adsl_setting.SuspendLayout();
             this.ip_gourp.SuspendLayout();
@@ -95,23 +97,10 @@
             this.task_setting.Controls.Add(this.edit_button);
             this.task_setting.Location = new System.Drawing.Point(12, 12);
             this.task_setting.Name = "task_setting";
-            this.task_setting.Size = new System.Drawing.Size(163, 182);
+            this.task_setting.Size = new System.Drawing.Size(163, 186);
             this.task_setting.TabIndex = 0;
             this.task_setting.TabStop = false;
             this.task_setting.Text = "配词设置";
-            // 
-            // grep_ip_checkbox
-            // 
-            this.grep_ip_checkbox.AutoSize = true;
-            this.grep_ip_checkbox.Checked = true;
-            this.grep_ip_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.grep_ip_checkbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.grep_ip_checkbox.Location = new System.Drawing.Point(7, 20);
-            this.grep_ip_checkbox.Name = "grep_ip_checkbox";
-            this.grep_ip_checkbox.Size = new System.Drawing.Size(105, 16);
-            this.grep_ip_checkbox.TabIndex = 7;
-            this.grep_ip_checkbox.Text = "启动IP重复过滤";
-            this.grep_ip_checkbox.UseVisualStyleBackColor = true;
             // 
             // key_count_label
             // 
@@ -126,6 +115,7 @@
             // random_radio
             // 
             this.random_radio.AutoSize = true;
+            this.random_radio.Checked = true;
             this.random_radio.Location = new System.Drawing.Point(6, 150);
             this.random_radio.Name = "random_radio";
             this.random_radio.Size = new System.Drawing.Size(71, 16);
@@ -137,12 +127,10 @@
             // normal_radio
             // 
             this.normal_radio.AutoSize = true;
-            this.normal_radio.Checked = true;
-            this.normal_radio.Location = new System.Drawing.Point(6, 119);
+            this.normal_radio.Location = new System.Drawing.Point(6, 110);
             this.normal_radio.Name = "normal_radio";
             this.normal_radio.Size = new System.Drawing.Size(71, 16);
             this.normal_radio.TabIndex = 4;
-            this.normal_radio.TabStop = true;
             this.normal_radio.Text = "顺序匹配";
             this.normal_radio.UseVisualStyleBackColor = true;
             // 
@@ -190,9 +178,24 @@
             this.edit_button.UseVisualStyleBackColor = true;
             this.edit_button.Click += new System.EventHandler(this.edit_button_Click);
             // 
+            // grep_ip_checkbox
+            // 
+            this.grep_ip_checkbox.AutoSize = true;
+            this.grep_ip_checkbox.Checked = true;
+            this.grep_ip_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.grep_ip_checkbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.grep_ip_checkbox.Location = new System.Drawing.Point(7, 20);
+            this.grep_ip_checkbox.Name = "grep_ip_checkbox";
+            this.grep_ip_checkbox.Size = new System.Drawing.Size(105, 16);
+            this.grep_ip_checkbox.TabIndex = 7;
+            this.grep_ip_checkbox.Text = "启动IP重复过滤";
+            this.grep_ip_checkbox.UseVisualStyleBackColor = true;
+            // 
             // adsl_setting
             // 
             this.adsl_setting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.adsl_setting.Controls.Add(this.gloable_count_input);
+            this.adsl_setting.Controls.Add(this.label21);
             this.adsl_setting.Controls.Add(this.label20);
             this.adsl_setting.Controls.Add(this.search_from_input);
             this.adsl_setting.Controls.Add(this.label17);
@@ -229,10 +232,44 @@
             this.adsl_setting.Controls.Add(this.label3);
             this.adsl_setting.Location = new System.Drawing.Point(194, 12);
             this.adsl_setting.Name = "adsl_setting";
-            this.adsl_setting.Size = new System.Drawing.Size(225, 349);
+            this.adsl_setting.Size = new System.Drawing.Size(225, 380);
             this.adsl_setting.TabIndex = 1;
             this.adsl_setting.TabStop = false;
             this.adsl_setting.Text = "参数设置";
+            // 
+            // gloable_count_input
+            // 
+            this.gloable_count_input.Location = new System.Drawing.Point(103, 345);
+            this.gloable_count_input.Name = "gloable_count_input";
+            this.gloable_count_input.Size = new System.Drawing.Size(114, 21);
+            this.gloable_count_input.TabIndex = 46;
+            this.gloable_count_input.Text = "500";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(13, 350);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(71, 12);
+            this.label21.TabIndex = 45;
+            this.label21.Text = "全局点击数:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(25, 320);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 12);
+            this.label20.TabIndex = 44;
+            this.label20.Text = "搜索网址:";
+            // 
+            // search_from_input
+            // 
+            this.search_from_input.Location = new System.Drawing.Point(103, 315);
+            this.search_from_input.Name = "search_from_input";
+            this.search_from_input.Size = new System.Drawing.Size(114, 21);
+            this.search_from_input.TabIndex = 43;
+            this.search_from_input.Text = "https://www.baidu.com/";
             // 
             // label17
             // 
@@ -553,14 +590,14 @@
             this.ip_gourp.TabStop = false;
             this.ip_gourp.Text = "IP设置";
             // 
-            // grep_ip_input
+            // label19
             // 
-            this.grep_ip_input.Location = new System.Drawing.Point(40, 42);
-            this.grep_ip_input.Name = "grep_ip_input";
-            this.grep_ip_input.Size = new System.Drawing.Size(31, 21);
-            this.grep_ip_input.TabIndex = 8;
-            this.grep_ip_input.Text = "1";
-            this.grep_ip_input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(77, 47);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(53, 12);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "天内的IP";
             // 
             // label2
             // 
@@ -571,37 +608,20 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "过滤";
             // 
-            // label19
+            // grep_ip_input
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(77, 47);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 12);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "天内的IP";
-            // 
-            // search_from_input
-            // 
-            this.search_from_input.Location = new System.Drawing.Point(103, 315);
-            this.search_from_input.Name = "search_from_input";
-            this.search_from_input.Size = new System.Drawing.Size(114, 21);
-            this.search_from_input.TabIndex = 43;
-            this.search_from_input.Text = "https://www.baidu.com/";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(25, 320);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(59, 12);
-            this.label20.TabIndex = 44;
-            this.label20.Text = "搜索网址:";
+            this.grep_ip_input.Location = new System.Drawing.Point(40, 42);
+            this.grep_ip_input.Name = "grep_ip_input";
+            this.grep_ip_input.Size = new System.Drawing.Size(31, 21);
+            this.grep_ip_input.TabIndex = 8;
+            this.grep_ip_input.Text = "1";
+            this.grep_ip_input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 373);
+            this.ClientSize = new System.Drawing.Size(431, 404);
             this.Controls.Add(this.ip_gourp);
             this.Controls.Add(this.save_button);
             this.Controls.Add(this.cancel_button);
@@ -672,5 +692,7 @@
         private System.Windows.Forms.TextBox grep_ip_input;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox search_from_input;
+        private System.Windows.Forms.TextBox gloable_count_input;
+        private System.Windows.Forms.Label label21;
     }
 }

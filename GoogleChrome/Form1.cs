@@ -29,20 +29,20 @@ namespace GoogleChrome
             taskView.Columns.Add("编号", 40);
             taskView.Columns.Add("网址", 200);
             taskView.Columns.Add("关键词", 90);
-            taskView.Columns.Add("广告数量", 60);
-            taskView.Columns.Add("快照数量", 60);
-            taskView.Columns.Add("是否完成", 60);
-            for (int i = 0; i < keys.Count; i++)
-            {
-                var item = new ListViewItem($"NO.{i + 1}");
-                item.SubItems.Add(Setting.SearchFrom);
-                item.SubItems.Add(keys[i]);
-                item.SubItems.Add($"{Setting.AdClickMin}-{Setting.AdClickMax}");
-                item.SubItems.Add($"{Setting.SnapClickMin}-{Setting.SnapClickMax}");
-                item.SubItems.Add("未完成");
-                taskView.Items.Add(item);
-            }
-            PrintLog($"数据加载完成...本次搜索网址为{Setting.SearchFrom}");
+            taskView.Columns.Add("广告", 50);
+            taskView.Columns.Add("目标", 50);
+            taskView.Columns.Add("添加时间", 100);
+            //for (int i = 0; i < keys.Count; i++)
+            //{
+            //    var item = new ListViewItem($"NO.{i + 1}");
+            //    item.SubItems.Add(Setting.SearchFrom);
+            //    item.SubItems.Add(keys[i]);
+            //    item.SubItems.Add($"{Setting.AdClickMin}-{Setting.AdClickMax}");
+            //    item.SubItems.Add($"{Setting.GlobalCount}");
+            //    item.SubItems.Add("未完成");
+            //    taskView.Items.Add(item);
+            //}
+            //PrintLog($"数据加载完成...本次搜索网址为{Setting.SearchFrom}");
         }
 
 
@@ -62,8 +62,7 @@ namespace GoogleChrome
             work = new Work(keys);
             work.UpdateButtonAction = UpdateButtonAsync;
             work.PrintLogAction = PrintLogAsync;
-            work.FinishTaskViewAction = FinishTaskViewAsync;
-            work.UpdateTaskViewCountAction = UpdateTaskCountViewAsync;
+            work.AddTaskListViewAction = AddTaskListViewAsync;
             chromeThread = new Thread(new ThreadStart(work.Start));
             //chromeThread = new Thread(new ThreadStart(work.ChangeIP));
             chromeThread.Start();
@@ -72,20 +71,24 @@ namespace GoogleChrome
 
         private void load_button_Click(object sender, EventArgs e)
         {
-            InitListView();
+            //InitListView();
+            logBox.Clear();
+            taskView.Clear();
         }
 
         private void close_button_Click(object sender, EventArgs e)
         {
+            PrintLog("程序停止中...");
             Setting.Running = false;
             UpdateButtonAction(false);
-            Thread.Sleep(1000);
+            work.Dispose();
             chromeThread.Abort();
+
+
         }
 
         private void setting_button_Click(object sender, EventArgs e)
         {
-            PrintLog("程序停止...");
             this.TopMost = false;
             new SettingForm().ShowDialog();
             this.TopMost = true;

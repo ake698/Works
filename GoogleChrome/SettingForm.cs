@@ -17,6 +17,7 @@ namespace GoogleChrome
         private void InitSettingUI()
         {
             Utils.LoadADSL();
+            Utils.AddReadme();
             adsl_input.Text = Setting.ADSL;
             adsl_user_input.Text = Setting.ADSLUser;
             adsl_password_input.Text = Setting.ADSLPassword;
@@ -36,7 +37,7 @@ namespace GoogleChrome
             snap_click_input2.Text = Setting.SnapClickMax.ToString();
             Utils.LoadKeys();
             key_count_label.Text = Setting.KeyCount.ToString();
-
+            gloable_count_input.Text = Setting.GlobalCount.ToString();
             random_radio.Checked = !Setting.Normal;
             normal_radio.Checked = Setting.Normal;
 
@@ -85,6 +86,7 @@ namespace GoogleChrome
 
             Setting.Normal = normal_radio.Checked;
             Setting.SearchFrom = search_from_input.Text;
+            Setting.GlobalCount = GetIntSettingValue(gloable_count_input);
 
             if (random_radio.Checked) Setting.Normal = false;
 

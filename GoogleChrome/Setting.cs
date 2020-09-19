@@ -29,6 +29,9 @@ namespace GoogleChrome
         public static int IPCheckDays { get; set; } = 1;
         public static bool CheckRepeatIP { get; set; } = true;
 
+        public const string ReadMe = "软件说明.txt";
+        public static string ReadMePath { get { return Path.Combine(Dir, ReadMe); } }
+
 
         public static bool Running { get; set; } = true;
 
@@ -38,7 +41,7 @@ namespace GoogleChrome
         public const string ADSLFileName = "adsl.ini";
         public static string ADSLPath { get { return Path.Combine(Dir, ADSLFileName); } }
 
-
+        public static int GlobalCount { get; set; } = 500;
         public static string SearchFrom { get; set; } = "https://www.baidu.com/";
         public static int WebStayMin { get; set; } = 3;
         public static int WebStayMax { get; set; } = 5;
@@ -54,7 +57,7 @@ namespace GoogleChrome
         public static int SnapStayMin { get; set; } = 3;
         public static int SnapStayMax { get; set; } = 5;
 
-        public static bool Normal { get; set; } = true;
+        public static bool Normal { get; set; } = false;
 
     }
 }

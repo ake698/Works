@@ -8,23 +8,23 @@ namespace GoogleChrome
         public Action<bool> UpdateButtonAction;
         public Action<string> PrintLogAction;
         public Action<int> FinishTaskViewAction;
-        public Action<int, int, int> UpdateTaskViewCountAction;
+        public Action<int, int, string> AddTaskListViewAction;
 
-        private void UpdateTaskCountView(int index, int ad, int snap)
+
+        private void AddTaskListView(int index, int ad, string key)
         {
-            taskView.Items[index].SubItems[3].Text = ad.ToString();
-            taskView.Items[index].SubItems[4].Text = snap.ToString();
+            var item = new ListViewItem($"NO.{index}");
+            item.SubItems.Add(Setting.SearchFrom);
+            item.SubItems.Add(key);
+            item.SubItems.Add(ad.ToString());
+            item.SubItems.Add($"{Setting.GlobalCount}");
+            item.SubItems.Add($"{DateTime.Now.ToString("HH:mm:ss")}");
+            taskView.Items.Add(item);
         }
 
-        private void UpdateTaskCountViewAsync(int index, int ad, int snap) => this.Invoke(UpdateTaskViewCountAction, index, ad, snap);
+        private void AddTaskListViewAsync(int index, int ad, string key) => this.Invoke(AddTaskListViewAction, index, ad, key);
 
 
-        private void FinishTaskView(int index)
-        {
-            taskView.Items[index].SubItems[4].Text = "已完成";
-        }
-
-        private void FinishTaskViewAsync(int index) => this.Invoke(FinishTaskViewAction, index);
 
 
         private void PrintLog(string log)
@@ -68,8 +68,7 @@ namespace GoogleChrome
         {
             UpdateButtonAction = UpdateButtonWhenStartAndStop;
             PrintLogAction = PrintLog;
-            FinishTaskViewAction = FinishTaskView;
-            UpdateTaskViewCountAction = UpdateTaskCountView;
+            AddTaskListViewAction = AddTaskListView;
         }
     }
 }

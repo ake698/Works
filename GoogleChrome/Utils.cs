@@ -73,14 +73,14 @@ namespace GoogleChrome
             }
             keyReader.Close();
             keyFileStream.Close();
-            if (!Setting.Normal)
-            {
-                Random rnd = new Random();
-                int rndIndex = rnd.Next(0, keys.Count);
-                string rndKey = keys[rndIndex];
-                keys.Clear();
-                keys.Add(rndKey);
-            }
+            //if (!Setting.Normal)
+            //{
+            //    Random rnd = new Random();
+            //    int rndIndex = rnd.Next(0, keys.Count);
+            //    string rndKey = keys[rndIndex];
+            //    keys.Clear();
+            //    keys.Add(rndKey);
+            //}
             return keys;
         }
 
@@ -113,6 +113,14 @@ namespace GoogleChrome
             return uas;
         }
 
+
+        public static int GetRandomNumber(int max)
+        {
+            Random rnd = new Random();
+            int index = rnd.Next(0, max);
+            return index;
+        }
+
         public static string GetRandomUA()
         {
             if (Setting.UAs == null )
@@ -120,9 +128,7 @@ namespace GoogleChrome
             if(Setting.UAs.Count < 1)
                 return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36";
 
-            Random rnd = new Random();
-            int index = rnd.Next(0, Setting.UAs.Count);
-            return Setting.UAs[index];
+            return Setting.UAs[GetRandomNumber(Setting.UAs.Count)];
         }
 
 
@@ -197,9 +203,21 @@ namespace GoogleChrome
         }
 
 
+        public static void AddReadme()
+        {
+            FileStream stream = new FileStream(Setting.ReadMePath, FileMode.Create);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine("百度点击程序");
+            writer.WriteLine("请事先安装好最新的Google浏览器，并设置好正确的adsl名称及其账号密码！");
+            writer.WriteLine("如遇到问题，请联系qq 1137230948，请备注来意");
+            writer.Close();
+            stream.Close();
+        }
+
+
         public static bool CheckSearchUrl(string url)
         {
-            if(url.StartsWith("https://www.baidu.com") || url.StartsWith("http://www.baidu.com/"))
+            if(url.StartsWith("https://www.baidu.com") || url.StartsWith("http://www.baidu.com"))
             {
                 return true;
             }

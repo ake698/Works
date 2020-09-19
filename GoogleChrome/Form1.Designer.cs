@@ -44,9 +44,9 @@ namespace GoogleChrome
             // close_button
             // 
             this.close_button.Enabled = false;
-            this.close_button.Location = new System.Drawing.Point(114, 62);
+            this.close_button.Location = new System.Drawing.Point(153, 62);
             this.close_button.Name = "close_button";
-            this.close_button.Size = new System.Drawing.Size(75, 23);
+            this.close_button.Size = new System.Drawing.Size(100, 30);
             this.close_button.TabIndex = 2;
             this.close_button.Text = "停止";
             this.close_button.UseVisualStyleBackColor = true;
@@ -56,7 +56,7 @@ namespace GoogleChrome
             // 
             this.startButton.Location = new System.Drawing.Point(6, 20);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.Size = new System.Drawing.Size(100, 30);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "开始";
             this.startButton.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@ namespace GoogleChrome
             this.button_group.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.button_group.Location = new System.Drawing.Point(3, 5);
             this.button_group.Name = "button_group";
-            this.button_group.Size = new System.Drawing.Size(195, 100);
+            this.button_group.Size = new System.Drawing.Size(259, 100);
             this.button_group.TabIndex = 5;
             this.button_group.TabStop = false;
             // 
@@ -81,7 +81,7 @@ namespace GoogleChrome
             // 
             this.setting_button.Location = new System.Drawing.Point(6, 62);
             this.setting_button.Name = "setting_button";
-            this.setting_button.Size = new System.Drawing.Size(75, 23);
+            this.setting_button.Size = new System.Drawing.Size(100, 30);
             this.setting_button.TabIndex = 3;
             this.setting_button.Text = "设置";
             this.setting_button.UseVisualStyleBackColor = true;
@@ -89,9 +89,9 @@ namespace GoogleChrome
             // 
             // load_button
             // 
-            this.load_button.Location = new System.Drawing.Point(114, 20);
+            this.load_button.Location = new System.Drawing.Point(153, 20);
             this.load_button.Name = "load_button";
-            this.load_button.Size = new System.Drawing.Size(75, 23);
+            this.load_button.Size = new System.Drawing.Size(100, 30);
             this.load_button.TabIndex = 1;
             this.load_button.Text = "重载任务";
             this.load_button.UseVisualStyleBackColor = true;
@@ -99,10 +99,10 @@ namespace GoogleChrome
             // 
             // logBox
             // 
-            this.logBox.Font = new System.Drawing.Font("宋体", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.logBox.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.logBox.Location = new System.Drawing.Point(3, 111);
             this.logBox.Name = "logBox";
-            this.logBox.Size = new System.Drawing.Size(195, 230);
+            this.logBox.Size = new System.Drawing.Size(259, 379);
             this.logBox.TabIndex = 6;
             this.logBox.Text = "";
             this.logBox.TextChanged += new System.EventHandler(this.logBox_TextChanged);
@@ -112,9 +112,9 @@ namespace GoogleChrome
             this.taskView.FullRowSelect = true;
             this.taskView.GridLines = true;
             this.taskView.HideSelection = false;
-            this.taskView.Location = new System.Drawing.Point(204, 12);
+            this.taskView.Location = new System.Drawing.Point(268, 12);
             this.taskView.Name = "taskView";
-            this.taskView.Size = new System.Drawing.Size(515, 329);
+            this.taskView.Size = new System.Drawing.Size(541, 478);
             this.taskView.TabIndex = 5;
             this.taskView.UseCompatibleStateImageBehavior = false;
             this.taskView.View = System.Windows.Forms.View.Details;
@@ -123,7 +123,7 @@ namespace GoogleChrome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 353);
+            this.ClientSize = new System.Drawing.Size(814, 502);
             this.Controls.Add(this.taskView);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.button_group);
