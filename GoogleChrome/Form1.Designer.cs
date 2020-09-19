@@ -113,8 +113,7 @@ namespace GoogleChrome
             this.taskView.HideSelection = false;
             this.taskView.Location = new System.Drawing.Point(204, 12);
             this.taskView.Name = "taskView";
-            this.taskView.Scrollable = false;
-            this.taskView.Size = new System.Drawing.Size(514, 329);
+            this.taskView.Size = new System.Drawing.Size(515, 329);
             this.taskView.TabIndex = 5;
             this.taskView.UseCompatibleStateImageBehavior = false;
             this.taskView.View = System.Windows.Forms.View.Details;

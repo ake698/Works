@@ -41,6 +41,8 @@ namespace GoogleChrome
             return cmd.StandardOutput.ReadToEnd();
         }
 
+
+
         #region 文件类工具
         public static void FileHanler(string fileName)
         {
@@ -51,7 +53,7 @@ namespace GoogleChrome
             string path = Path.Combine(Setting.Dir, fileName);
             if (!File.Exists(path))
             {
-                File.Create(path);
+                File.Create(path).Close();
             }
         }
 
@@ -123,19 +125,30 @@ namespace GoogleChrome
             return Setting.UAs[index];
         }
 
-        public static List<string> GetIPList()
+
+
+
+        public static List<string> GetIPList(int days)
         {
             FileHanler(Setting.IPFileName);
-            FileStream stream = new FileStream(Setting.IPPath, FileMode.Open, FileAccess.Read);
-            StreamReader reader = new StreamReader(stream, System.Text.Encoding.Default);
             var ips = new List<string>();
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            for (int i = 0; i < days; i++)
             {
-                ips.Add(line.Trim());
+                string filePath = Path.Combine(Setting.Dir, $"{DateTime.Now.AddDays(-i) :yyyy-MM-dd}IP.txt");
+                if (!File.Exists(filePath))
+                {
+                    continue;
+                }
+                FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                StreamReader reader = new StreamReader(stream, System.Text.Encoding.Default);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    ips.Add(line.Trim());
+                }
+                reader.Close();
+                stream.Close();
             }
-            reader.Close();
-            stream.Close();
             return ips;
         }
 
@@ -148,6 +161,51 @@ namespace GoogleChrome
             stream.Close();
         }
         #endregion
+
+        public static void LoadADSL()
+        {
+            FileHanler(Setting.ADSLFileName);
+            FileStream stream = new FileStream(Setting.ADSLPath, FileMode.Open, FileAccess.Read);
+            StreamReader reader = new StreamReader(stream, System.Text.Encoding.Default);
+            var results = new List<string>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                results.Add(line.Trim());
+            }
+            reader.Close();
+            stream.Close();
+            if(results.Count > 2)
+            {
+                Setting.ADSL = results[0];
+                Setting.ADSLUser = results[1];
+                Setting.ADSLPassword = results[2];
+            }
+            
+        }
+
+        public static void SaveADSL()
+        {
+            FileHanler(Setting.ADSLFileName);
+            FileStream stream = new FileStream(Setting.ADSLPath, FileMode.Create);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(Setting.ADSL);
+            writer.WriteLine(Setting.ADSLUser);
+            writer.WriteLine(Setting.ADSLPassword);
+            writer.Close();
+            stream.Close();
+        }
+
+
+        public static bool CheckSearchUrl(string url)
+        {
+            if(url.StartsWith("https://www.baidu.com") || url.StartsWith("http://www.baidu.com/"))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
         public static string HttpGet(string url)
         {

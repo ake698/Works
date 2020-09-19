@@ -12,8 +12,8 @@ namespace GoogleChrome
 
         private void UpdateTaskCountView(int index, int ad, int snap)
         {
-            taskView.Items[index].SubItems[2].Text = ad.ToString();
-            taskView.Items[index].SubItems[3].Text = snap.ToString();
+            taskView.Items[index].SubItems[3].Text = ad.ToString();
+            taskView.Items[index].SubItems[4].Text = snap.ToString();
         }
 
         private void UpdateTaskCountViewAsync(int index, int ad, int snap) => this.Invoke(UpdateTaskViewCountAction, index, ad, snap);

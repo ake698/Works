@@ -57,19 +57,28 @@ namespace GoogleChrome
 
         public void Start()
         {
+            
             for (int i = 0; i < _keys.Count; i++)
             {
-                if (!Setting.Running) break;
+                // 更新IP
+                ChangeIP();
                 // 随机更新参数
                 RandomSetting();
                 // 更新点击数量
                 UpdateTaskViewCountAction(i, _clickADCount, _clickSnapCount);
-                InitChrome();
+                try
+                {
+                    InitChrome();
+                }catch(Exception e)
+                {
+                    PrintLogAction(e.Message);
+                }
                 Setting.Running = Utils.CheckAuth();
                 SearchKey(_keys[i]);
                 FinishTaskViewAction(i);
                 Dispose();
                 PrintLogAction($"{_keys[i]} 点击完成");
+                if (!Setting.Running) break;
             }
             UpdateButtonAction(false);
             PrintLogAction("所有任务完成...");
@@ -85,6 +94,9 @@ namespace GoogleChrome
             ChromeDriverService service = ChromeDriverService.CreateDefaultService(driverDir);
             service.HideCommandPromptWindow = true;
             _driver = new ChromeDriver(service, option);
+            
+
+
         }
 
         private void SearchKey(string key)
@@ -92,7 +104,7 @@ namespace GoogleChrome
             PrintLogAction($"开始关键词 {key} 操作...");
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
-            _driver.Navigate().GoToUrl("https://www.baidu.com/");
+            _driver.Navigate().GoToUrl(Setting.SearchFrom);
             var input = _driver.FindElementById("kw");
             input.Click();
             input.SendKeys(key);
@@ -179,16 +191,27 @@ namespace GoogleChrome
             _driver.SwitchTo().Window(_driver.WindowHandles.Last());
             for (int i = 0; i < stayTime; i++)
             {
-                ExecutorJs($"window.scrollTo(0, {300 * i});");
-                Thread.Sleep(1000);
-            }
+                try
+                {
+                    ExecutorJs($"window.scrollTo(0, {300 * i});");
+                    Thread.Sleep(1000);
+                }
+                catch (Exception)
+                {
+
+                    PrintLogAction("该页面超时...");
+                    Thread.Sleep(2000);
+                    break;
+                }
+
+        }
             Thread.Sleep(1000);
         }
 
 
         private void ExecutorJs(string js, params object[] args)
         {
-            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
+            IJavaScriptExecutor executor = _driver;
             executor.ExecuteScript(js,args);
         }
     }

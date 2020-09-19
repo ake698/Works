@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GoogleChrome
 {
@@ -7,7 +8,13 @@ namespace GoogleChrome
     {
         private void ReDial()
         {
+            PrintLogAction("正在断开连接...");
+            Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} /disconnect");
 
+            Thread.Sleep(2000);
+            PrintLogAction("正在重新获取IP...");
+            Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} {Setting.ADSLUser} {Setting.ADSLPassword}");
+            Thread.Sleep(3000);
         }
 
 
@@ -15,7 +22,9 @@ namespace GoogleChrome
 
         private bool CheckIP(string ip)
         {
-            var ips = Utils.GetIPList();
+            if (!Setting.CheckRepeatIP) return true;
+            
+            var ips = Utils.GetIPList(Setting.IPCheckDays);
             if (!ips.Contains(ip.Trim()))
             {
                 return true;
@@ -31,6 +40,7 @@ namespace GoogleChrome
             {
                 try
                 {
+                    ReDial();
                     ip = GetIP();
                     hasIP = true;
                     PrintLogAction($"获取到IP {ip}");
@@ -54,6 +64,7 @@ namespace GoogleChrome
 
         public string GetIP()
         {
+            PrintLogAction("IP校验中...");
             var result = Utils.HttpGet("https://www.ip.cn/api/index?ip=&type=0");
             Debug.WriteLine(result);
             string pattern = @"\d+\.\d+\.\d+\.\d+";

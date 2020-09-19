@@ -30,10 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
             this.task_setting = new System.Windows.Forms.GroupBox();
+            this.grep_ip_checkbox = new System.Windows.Forms.CheckBox();
             this.key_count_label = new System.Windows.Forms.Label();
             this.random_radio = new System.Windows.Forms.RadioButton();
             this.normal_radio = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
+            this.splite_label1 = new System.Windows.Forms.Label();
             this.count_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.edit_button = new System.Windows.Forms.Button();
@@ -65,15 +66,22 @@
             this.label7 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.disconnect_staytime_input = new System.Windows.Forms.TextBox();
+            this.adsl_password_input = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.connect_staytime_input = new System.Windows.Forms.TextBox();
+            this.adsl_user_input = new System.Windows.Forms.TextBox();
             this.adsl_input = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cancel_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
+            this.ip_gourp = new System.Windows.Forms.GroupBox();
+            this.grep_ip_input = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.search_from_input = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.task_setting.SuspendLayout();
             this.adsl_setting.SuspendLayout();
+            this.ip_gourp.SuspendLayout();
             this.SuspendLayout();
             // 
             // task_setting
@@ -81,16 +89,29 @@
             this.task_setting.Controls.Add(this.key_count_label);
             this.task_setting.Controls.Add(this.random_radio);
             this.task_setting.Controls.Add(this.normal_radio);
-            this.task_setting.Controls.Add(this.label2);
+            this.task_setting.Controls.Add(this.splite_label1);
             this.task_setting.Controls.Add(this.count_button);
             this.task_setting.Controls.Add(this.label1);
             this.task_setting.Controls.Add(this.edit_button);
             this.task_setting.Location = new System.Drawing.Point(12, 12);
             this.task_setting.Name = "task_setting";
-            this.task_setting.Size = new System.Drawing.Size(163, 226);
+            this.task_setting.Size = new System.Drawing.Size(163, 182);
             this.task_setting.TabIndex = 0;
             this.task_setting.TabStop = false;
             this.task_setting.Text = "配词设置";
+            // 
+            // grep_ip_checkbox
+            // 
+            this.grep_ip_checkbox.AutoSize = true;
+            this.grep_ip_checkbox.Checked = true;
+            this.grep_ip_checkbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.grep_ip_checkbox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.grep_ip_checkbox.Location = new System.Drawing.Point(7, 20);
+            this.grep_ip_checkbox.Name = "grep_ip_checkbox";
+            this.grep_ip_checkbox.Size = new System.Drawing.Size(105, 16);
+            this.grep_ip_checkbox.TabIndex = 7;
+            this.grep_ip_checkbox.Text = "启动IP重复过滤";
+            this.grep_ip_checkbox.UseVisualStyleBackColor = true;
             // 
             // key_count_label
             // 
@@ -105,7 +126,7 @@
             // random_radio
             // 
             this.random_radio.AutoSize = true;
-            this.random_radio.Location = new System.Drawing.Point(6, 170);
+            this.random_radio.Location = new System.Drawing.Point(6, 150);
             this.random_radio.Name = "random_radio";
             this.random_radio.Size = new System.Drawing.Size(71, 16);
             this.random_radio.TabIndex = 5;
@@ -117,7 +138,7 @@
             // 
             this.normal_radio.AutoSize = true;
             this.normal_radio.Checked = true;
-            this.normal_radio.Location = new System.Drawing.Point(7, 125);
+            this.normal_radio.Location = new System.Drawing.Point(6, 119);
             this.normal_radio.Name = "normal_radio";
             this.normal_radio.Size = new System.Drawing.Size(71, 16);
             this.normal_radio.TabIndex = 4;
@@ -125,19 +146,19 @@
             this.normal_radio.Text = "顺序匹配";
             this.normal_radio.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // splite_label1
             // 
-            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.label2.Font = new System.Drawing.Font("宋体", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(0, 101);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(160, 1);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "\"\"";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.splite_label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.splite_label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splite_label1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.splite_label1.Font = new System.Drawing.Font("宋体", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.splite_label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.splite_label1.Location = new System.Drawing.Point(0, 101);
+            this.splite_label1.Name = "splite_label1";
+            this.splite_label1.Size = new System.Drawing.Size(160, 1);
+            this.splite_label1.TabIndex = 3;
+            this.splite_label1.Text = "\"\"";
+            this.splite_label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // count_button
             // 
@@ -172,6 +193,8 @@
             // adsl_setting
             // 
             this.adsl_setting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.adsl_setting.Controls.Add(this.label20);
+            this.adsl_setting.Controls.Add(this.search_from_input);
             this.adsl_setting.Controls.Add(this.label17);
             this.adsl_setting.Controls.Add(this.snap_staytime_input2);
             this.adsl_setting.Controls.Add(this.snap_staytime_input1);
@@ -199,14 +222,14 @@
             this.adsl_setting.Controls.Add(this.label7);
             this.adsl_setting.Controls.Add(this.textBox4);
             this.adsl_setting.Controls.Add(this.label6);
-            this.adsl_setting.Controls.Add(this.disconnect_staytime_input);
+            this.adsl_setting.Controls.Add(this.adsl_password_input);
             this.adsl_setting.Controls.Add(this.label5);
-            this.adsl_setting.Controls.Add(this.connect_staytime_input);
+            this.adsl_setting.Controls.Add(this.adsl_user_input);
             this.adsl_setting.Controls.Add(this.adsl_input);
             this.adsl_setting.Controls.Add(this.label3);
             this.adsl_setting.Location = new System.Drawing.Point(194, 12);
             this.adsl_setting.Name = "adsl_setting";
-            this.adsl_setting.Size = new System.Drawing.Size(225, 320);
+            this.adsl_setting.Size = new System.Drawing.Size(225, 349);
             this.adsl_setting.TabIndex = 1;
             this.adsl_setting.TabStop = false;
             this.adsl_setting.Text = "参数设置";
@@ -404,11 +427,11 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 50);
+            this.label4.Location = new System.Drawing.Point(25, 50);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 12);
+            this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 8;
-            this.label4.Text = "连接后等待:";
+            this.label4.Text = "ADSL账号:";
             // 
             // label8
             // 
@@ -454,30 +477,30 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "网站停留:";
             // 
-            // disconnect_staytime_input
+            // adsl_password_input
             // 
-            this.disconnect_staytime_input.Location = new System.Drawing.Point(103, 75);
-            this.disconnect_staytime_input.Name = "disconnect_staytime_input";
-            this.disconnect_staytime_input.Size = new System.Drawing.Size(114, 21);
-            this.disconnect_staytime_input.TabIndex = 11;
-            this.disconnect_staytime_input.Text = "3";
+            this.adsl_password_input.Location = new System.Drawing.Point(103, 75);
+            this.adsl_password_input.Name = "adsl_password_input";
+            this.adsl_password_input.Size = new System.Drawing.Size(114, 21);
+            this.adsl_password_input.TabIndex = 11;
+            this.adsl_password_input.Text = "294085";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 80);
+            this.label5.Location = new System.Drawing.Point(25, 80);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 12);
+            this.label5.Size = new System.Drawing.Size(59, 12);
             this.label5.TabIndex = 10;
-            this.label5.Text = "断开后等待:";
+            this.label5.Text = "ADSL密码:";
             // 
-            // connect_staytime_input
+            // adsl_user_input
             // 
-            this.connect_staytime_input.Location = new System.Drawing.Point(103, 45);
-            this.connect_staytime_input.Name = "connect_staytime_input";
-            this.connect_staytime_input.Size = new System.Drawing.Size(114, 21);
-            this.connect_staytime_input.TabIndex = 9;
-            this.connect_staytime_input.Text = "3";
+            this.adsl_user_input.Location = new System.Drawing.Point(103, 45);
+            this.adsl_user_input.Name = "adsl_user_input";
+            this.adsl_user_input.Size = new System.Drawing.Size(114, 21);
+            this.adsl_user_input.TabIndex = 9;
+            this.adsl_user_input.Text = "hh27ad113";
             // 
             // adsl_input
             // 
@@ -499,9 +522,9 @@
             // 
             // cancel_button
             // 
-            this.cancel_button.Location = new System.Drawing.Point(12, 256);
+            this.cancel_button.Location = new System.Drawing.Point(9, 290);
             this.cancel_button.Name = "cancel_button";
-            this.cancel_button.Size = new System.Drawing.Size(173, 32);
+            this.cancel_button.Size = new System.Drawing.Size(176, 32);
             this.cancel_button.TabIndex = 2;
             this.cancel_button.Text = "关闭";
             this.cancel_button.UseVisualStyleBackColor = true;
@@ -509,7 +532,7 @@
             // 
             // save_button
             // 
-            this.save_button.Location = new System.Drawing.Point(12, 297);
+            this.save_button.Location = new System.Drawing.Point(9, 331);
             this.save_button.Name = "save_button";
             this.save_button.Size = new System.Drawing.Size(176, 30);
             this.save_button.TabIndex = 3;
@@ -517,11 +540,69 @@
             this.save_button.UseVisualStyleBackColor = true;
             this.save_button.Click += new System.EventHandler(this.save_button_Click);
             // 
+            // ip_gourp
+            // 
+            this.ip_gourp.Controls.Add(this.label19);
+            this.ip_gourp.Controls.Add(this.label2);
+            this.ip_gourp.Controls.Add(this.grep_ip_input);
+            this.ip_gourp.Controls.Add(this.grep_ip_checkbox);
+            this.ip_gourp.Location = new System.Drawing.Point(12, 202);
+            this.ip_gourp.Name = "ip_gourp";
+            this.ip_gourp.Size = new System.Drawing.Size(160, 71);
+            this.ip_gourp.TabIndex = 8;
+            this.ip_gourp.TabStop = false;
+            this.ip_gourp.Text = "IP设置";
+            // 
+            // grep_ip_input
+            // 
+            this.grep_ip_input.Location = new System.Drawing.Point(40, 42);
+            this.grep_ip_input.Name = "grep_ip_input";
+            this.grep_ip_input.Size = new System.Drawing.Size(31, 21);
+            this.grep_ip_input.TabIndex = 8;
+            this.grep_ip_input.Text = "1";
+            this.grep_ip_input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "过滤";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(77, 47);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(53, 12);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "天内的IP";
+            // 
+            // search_from_input
+            // 
+            this.search_from_input.Location = new System.Drawing.Point(103, 315);
+            this.search_from_input.Name = "search_from_input";
+            this.search_from_input.Size = new System.Drawing.Size(114, 21);
+            this.search_from_input.TabIndex = 43;
+            this.search_from_input.Text = "https://www.baidu.com/";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(25, 320);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 12);
+            this.label20.TabIndex = 44;
+            this.label20.Text = "搜索网址:";
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 344);
+            this.ClientSize = new System.Drawing.Size(431, 373);
+            this.Controls.Add(this.ip_gourp);
             this.Controls.Add(this.save_button);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.adsl_setting);
@@ -533,6 +614,8 @@
             this.task_setting.PerformLayout();
             this.adsl_setting.ResumeLayout(false);
             this.adsl_setting.PerformLayout();
+            this.ip_gourp.ResumeLayout(false);
+            this.ip_gourp.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -540,7 +623,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox task_setting;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label splite_label1;
         private System.Windows.Forms.Button count_button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button edit_button;
@@ -577,10 +660,17 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox disconnect_staytime_input;
+        private System.Windows.Forms.TextBox adsl_password_input;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox connect_staytime_input;
+        private System.Windows.Forms.TextBox adsl_user_input;
         private System.Windows.Forms.TextBox adsl_input;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox grep_ip_checkbox;
+        private System.Windows.Forms.GroupBox ip_gourp;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox grep_ip_input;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox search_from_input;
     }
 }

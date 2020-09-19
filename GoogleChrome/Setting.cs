@@ -21,16 +21,25 @@ namespace GoogleChrome
         public static string UAPath { get { return Path.Combine(Dir, UAFileName); } }
         public static List<string> UAs = null;
 
-        public static string IPFileName = "IP.txt";
+        public static string IPFileName = $"{DateTime.Now:yyyy-MM-dd}IP.txt";
         public static string IPPath { get { return Path.Combine(Dir, IPFileName); } }
         #endregion
         public const string Auth = "http://119.29.79.210/";
+
+        public static int IPCheckDays { get; set; } = 1;
+        public static bool CheckRepeatIP { get; set; } = true;
+
+
         public static bool Running { get; set; } = true;
 
         public static string ADSL { get; set; } = "adsl";
+        public static string ADSLUser { get; set; } = "hh27ad113";
+        public static string ADSLPassword { get; set; } = "294085";
+        public const string ADSLFileName = "adsl.ini";
+        public static string ADSLPath { get { return Path.Combine(Dir, ADSLFileName); } }
 
-        public static int ConnectStay { get; set; } = 3;
-        public static int DisConnectStay { get; set; } = 3;
+
+        public static string SearchFrom { get; set; } = "https://www.baidu.com/";
         public static int WebStayMin { get; set; } = 3;
         public static int WebStayMax { get; set; } = 5;
         public static int ClickLimit { get; set; } = 6;
