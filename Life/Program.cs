@@ -1,9 +1,4 @@
-﻿using Display;
-using System;
-using System.Diagnostics;
-using System.IO;
-
-namespace Life
+﻿namespace Life
 {
     class Program
     {
@@ -12,7 +7,5 @@ namespace Life
             LifeGenerate life = new LifeGenerate(args);
             life.Start();
         }
-
-
     }
 }

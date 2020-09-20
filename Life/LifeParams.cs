@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Life
 {
@@ -37,6 +36,7 @@ namespace Life
 
         private List<string> args = new List<string>();
         private Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+
 
         private void ParamsParse(string[] command)
         {

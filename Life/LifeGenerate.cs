@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Life
 {
@@ -68,7 +68,6 @@ namespace Life
                 }
             }
             End();
-
         }
 
         private void End()
@@ -242,11 +241,11 @@ namespace Life
                 
                 var fparrs = filePath.Split(@"\");
                 string fileName = fparrs[fparrs.Length - 1];
-                var arrs = fileName.Split(".")[0].Split("_");
-                if (arrs.Length > 1)
+                string pattern = @"(\d+)x(\d+)";
+                var matches = Regex.Matches(fileName, pattern);
+                if(matches.Count > 0)
                 {
-                    // Has rows columns
-                    var rc = arrs[1].Split("x");
+                    var rc = matches[0].Value.Split("x");
                     args.Colums = int.Parse(rc[1]);
                     args.Rows = int.Parse(rc[0]);
                 }
