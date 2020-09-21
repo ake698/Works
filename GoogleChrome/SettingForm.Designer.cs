@@ -63,12 +63,12 @@
             this.search_staytime_input2 = new System.Windows.Forms.TextBox();
             this.search_staytime_input1 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.site_stay_input2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.click_limit_input = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.site_stay_input1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.adsl_password_input = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -218,12 +218,12 @@
             this.adsl_setting.Controls.Add(this.search_staytime_input2);
             this.adsl_setting.Controls.Add(this.search_staytime_input1);
             this.adsl_setting.Controls.Add(this.label11);
-            this.adsl_setting.Controls.Add(this.textBox9);
+            this.adsl_setting.Controls.Add(this.site_stay_input2);
             this.adsl_setting.Controls.Add(this.label4);
             this.adsl_setting.Controls.Add(this.label8);
-            this.adsl_setting.Controls.Add(this.textBox5);
+            this.adsl_setting.Controls.Add(this.click_limit_input);
             this.adsl_setting.Controls.Add(this.label7);
-            this.adsl_setting.Controls.Add(this.textBox4);
+            this.adsl_setting.Controls.Add(this.site_stay_input1);
             this.adsl_setting.Controls.Add(this.label6);
             this.adsl_setting.Controls.Add(this.adsl_password_input);
             this.adsl_setting.Controls.Add(this.label5);
@@ -451,14 +451,14 @@
             this.label11.TabIndex = 23;
             this.label11.Text = "--";
             // 
-            // textBox9
+            // site_stay_input2
             // 
-            this.textBox9.Location = new System.Drawing.Point(173, 105);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(44, 21);
-            this.textBox9.TabIndex = 22;
-            this.textBox9.Text = "5";
-            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.site_stay_input2.Location = new System.Drawing.Point(173, 105);
+            this.site_stay_input2.Name = "site_stay_input2";
+            this.site_stay_input2.Size = new System.Drawing.Size(44, 21);
+            this.site_stay_input2.TabIndex = 22;
+            this.site_stay_input2.Text = "5";
+            this.site_stay_input2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label4
             // 
@@ -479,13 +479,13 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "搜索页停留:";
             // 
-            // textBox5
+            // click_limit_input
             // 
-            this.textBox5.Location = new System.Drawing.Point(103, 135);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(114, 21);
-            this.textBox5.TabIndex = 15;
-            this.textBox5.Text = "6";
+            this.click_limit_input.Location = new System.Drawing.Point(103, 135);
+            this.click_limit_input.Name = "click_limit_input";
+            this.click_limit_input.Size = new System.Drawing.Size(114, 21);
+            this.click_limit_input.TabIndex = 15;
+            this.click_limit_input.Text = "6";
             // 
             // label7
             // 
@@ -496,14 +496,14 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "点击位限制:";
             // 
-            // textBox4
+            // site_stay_input1
             // 
-            this.textBox4.Location = new System.Drawing.Point(103, 105);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(40, 21);
-            this.textBox4.TabIndex = 13;
-            this.textBox4.Text = "3";
-            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.site_stay_input1.Location = new System.Drawing.Point(103, 105);
+            this.site_stay_input1.Name = "site_stay_input1";
+            this.site_stay_input1.Size = new System.Drawing.Size(40, 21);
+            this.site_stay_input1.TabIndex = 13;
+            this.site_stay_input1.Text = "3";
+            this.site_stay_input1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
             // 
@@ -673,12 +673,12 @@
         private System.Windows.Forms.TextBox search_staytime_input2;
         private System.Windows.Forms.TextBox search_staytime_input1;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox site_stay_input2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox click_limit_input;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox site_stay_input1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox adsl_password_input;
         private System.Windows.Forms.Label label5;
