@@ -41,8 +41,6 @@ namespace GoogleChrome
             return cmd.StandardOutput.ReadToEnd();
         }
 
-
-
         #region 文件类工具
         public static void FileHanler(string fileName)
         {
@@ -168,7 +166,14 @@ namespace GoogleChrome
         }
         #endregion
 
-        public static void LoadADSL()
+        public static int StringToInt(string value, int defaultValue)
+        {
+            int result = defaultValue;
+            int.TryParse(value, out result);
+            return result;
+        }
+
+        public static void LoadSetting()
         {
             FileHanler(Setting.ADSLFileName);
             FileStream stream = new FileStream(Setting.ADSLPath, FileMode.Open, FileAccess.Read);
@@ -177,20 +182,35 @@ namespace GoogleChrome
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                results.Add(line.Trim());
+                results.Add(line);
             }
             reader.Close();
             stream.Close();
-            if(results.Count > 2)
+            if(results.Count > 17)
             {
                 Setting.ADSL = results[0];
                 Setting.ADSLUser = results[1];
                 Setting.ADSLPassword = results[2];
+                Setting.SiteStayMin = StringToInt(results[3], Setting.SiteStayMin);
+                Setting.SiteStayMax = StringToInt(results[4], Setting.SiteStayMax);
+                Setting.ClickLimit = StringToInt(results[5], Setting.ClickLimit);
+                Setting.SearchStayMin = StringToInt(results[6], Setting.SearchStayMin);
+                Setting.SearchStayMax = StringToInt(results[7], Setting.SearchStayMax);
+                Setting.AdClickMin = StringToInt(results[8], Setting.AdClickMin);
+                Setting.AdClickMax = StringToInt(results[9], Setting.AdClickMax);
+                Setting.AdStayMin = StringToInt(results[10], Setting.AdStayMin);
+                Setting.AdStayMax = StringToInt(results[11], Setting.AdStayMax);
+                Setting.SnapClickMin = StringToInt(results[12], Setting.SnapClickMin);
+                Setting.SnapClickMax = StringToInt(results[13], Setting.SnapClickMax);
+                Setting.SnapStayMin = StringToInt(results[14], Setting.SnapStayMin);
+                Setting.SnapStayMax = StringToInt(results[15], Setting.SnapStayMax);
+                Setting.SearchFrom = results[16];
+                Setting.GlobalCount = StringToInt(results[17], Setting.SiteStayMin);
             }
             
         }
 
-        public static void SaveADSL()
+        public static void SaveSetting()
         {
             FileHanler(Setting.ADSLFileName);
             FileStream stream = new FileStream(Setting.ADSLPath, FileMode.Create);
@@ -198,6 +218,21 @@ namespace GoogleChrome
             writer.WriteLine(Setting.ADSL);
             writer.WriteLine(Setting.ADSLUser);
             writer.WriteLine(Setting.ADSLPassword);
+            writer.WriteLine(Setting.SiteStayMin);
+            writer.WriteLine(Setting.SiteStayMax);
+            writer.WriteLine(Setting.ClickLimit);
+            writer.WriteLine(Setting.SearchStayMin);
+            writer.WriteLine(Setting.SearchStayMax);
+            writer.WriteLine(Setting.AdClickMin);
+            writer.WriteLine(Setting.AdClickMax);
+            writer.WriteLine(Setting.AdStayMin);
+            writer.WriteLine(Setting.AdStayMax);
+            writer.WriteLine(Setting.SnapClickMin);
+            writer.WriteLine(Setting.SnapClickMax);
+            writer.WriteLine(Setting.SnapStayMin);
+            writer.WriteLine(Setting.SnapStayMax);
+            writer.WriteLine(Setting.SearchFrom);
+            writer.WriteLine(Setting.GlobalCount);
             writer.Close();
             stream.Close();
         }
@@ -207,8 +242,9 @@ namespace GoogleChrome
         {
             FileStream stream = new FileStream(Setting.ReadMePath, FileMode.Create);
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine("百度点击程序");
-            writer.WriteLine("请事先安装好最新的Google浏览器，并设置好正确的adsl名称及其账号密码！");
+            writer.WriteLine("百度点击程序注意事项");
+            writer.WriteLine("1. 请使用程序目录中的安装包来安装好Google浏览器，此程序仅支持此版本！");
+            writer.WriteLine("2. 设置好正确的adsl名称及其账号密码！");
             writer.WriteLine("如遇到问题，请联系qq 1137230948，请备注来意");
             writer.Close();
             stream.Close();

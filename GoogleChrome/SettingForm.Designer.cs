@@ -559,7 +559,7 @@
             // 
             // cancel_button
             // 
-            this.cancel_button.Location = new System.Drawing.Point(9, 290);
+            this.cancel_button.Location = new System.Drawing.Point(9, 297);
             this.cancel_button.Name = "cancel_button";
             this.cancel_button.Size = new System.Drawing.Size(176, 32);
             this.cancel_button.TabIndex = 2;
@@ -569,7 +569,7 @@
             // 
             // save_button
             // 
-            this.save_button.Location = new System.Drawing.Point(9, 331);
+            this.save_button.Location = new System.Drawing.Point(9, 353);
             this.save_button.Name = "save_button";
             this.save_button.Size = new System.Drawing.Size(176, 30);
             this.save_button.TabIndex = 3;
@@ -585,7 +585,7 @@
             this.ip_gourp.Controls.Add(this.grep_ip_checkbox);
             this.ip_gourp.Location = new System.Drawing.Point(12, 202);
             this.ip_gourp.Name = "ip_gourp";
-            this.ip_gourp.Size = new System.Drawing.Size(160, 71);
+            this.ip_gourp.Size = new System.Drawing.Size(160, 82);
             this.ip_gourp.TabIndex = 8;
             this.ip_gourp.TabStop = false;
             this.ip_gourp.Text = "IP设置";

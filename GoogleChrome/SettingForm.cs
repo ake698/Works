@@ -16,25 +16,33 @@ namespace GoogleChrome
 
         private void InitSettingUI()
         {
-            Utils.LoadADSL();
+            Utils.LoadSetting();
             Utils.AddReadme();
+            
+            grep_ip_input.Text = Setting.IPCheckDays.ToString();
+            grep_ip_checkbox.Checked = Setting.CheckRepeatIP;
+
             adsl_input.Text = Setting.ADSL;
             adsl_user_input.Text = Setting.ADSLUser;
             adsl_password_input.Text = Setting.ADSLPassword;
 
-
-            grep_ip_input.Text = Setting.IPCheckDays.ToString();
-            grep_ip_checkbox.Checked = Setting.CheckRepeatIP;
+            site_stay_input1.Text = Setting.SiteStayMin.ToString();
+            site_stay_input2.Text = Setting.SiteStayMax.ToString();
+            click_limit_input.Text = Setting.ClickLimit.ToString();
+            
             search_staytime_input1.Text = Setting.SearchStayMin.ToString();
             search_staytime_input2.Text = Setting.SearchStayMax.ToString();
             ad_click_input1.Text = Setting.AdClickMin.ToString();
             ad_click_input2.Text = Setting.AdClickMax.ToString();
             ad_staytime_input1.Text = Setting.AdStayMin.ToString();
             ad_staytime_input2.Text = Setting.AdStayMax.ToString();
+
             snap_staytime_input1.Text = Setting.SnapStayMin.ToString();
             snap_staytime_input2.Text = Setting.SnapStayMax.ToString();
             snap_click_input1.Text = Setting.SnapClickMin.ToString();
             snap_click_input2.Text = Setting.SnapClickMax.ToString();
+
+            // 为更新统计数量
             Utils.LoadKeys();
             key_count_label.Text = Setting.KeyCount.ToString();
             gloable_count_input.Text = Setting.GlobalCount.ToString();
@@ -63,14 +71,18 @@ namespace GoogleChrome
                 MessageBox.Show("ADSL信息不能为空", "错误");
                 return;
             }
-            Setting.ADSL = adsl_input.Text;
-            Setting.ADSLUser = adsl_user_input.Text;
-            Setting.ADSLPassword = adsl_password_input.Text;
-            Utils.SaveADSL();
 
             Setting.CheckRepeatIP = grep_ip_checkbox.Checked;
             Setting.IPCheckDays = GetIntSettingValue(grep_ip_input);
 
+
+            Setting.ADSL = adsl_input.Text;
+            Setting.ADSLUser = adsl_user_input.Text;
+            Setting.ADSLPassword = adsl_password_input.Text;
+
+            Setting.SiteStayMin = GetIntSettingValue(site_stay_input1);
+            Setting.SiteStayMax = GetIntSettingValue(site_stay_input2, Setting.SiteStayMin);
+            Setting.ClickLimit = GetIntSettingValue(click_limit_input);
             Setting.SearchStayMin = GetIntSettingValue(search_staytime_input1);
             Setting.SearchStayMax = GetIntSettingValue(search_staytime_input2, Setting.SearchStayMin);
 
@@ -90,6 +102,7 @@ namespace GoogleChrome
 
             if (random_radio.Checked) Setting.Normal = false;
 
+            Utils.SaveSetting();
             MessageBox.Show("保存成功！","保存设置");
         }
 
