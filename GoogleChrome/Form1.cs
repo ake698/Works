@@ -49,6 +49,7 @@ namespace GoogleChrome
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            Utils.LoadADSL();
             InitListView();
             Setting.Running = true;
             if (keys.Count < 1)

@@ -9,12 +9,13 @@ namespace GoogleChrome
         private void ReDial()
         {
             PrintLogAction("正在断开连接...");
-            Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} /disconnect");
-
-            Thread.Sleep(2000);
+            var result = Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} /disconnect");
+            //PrintLogAction(result);
+            Thread.Sleep(4000);
             PrintLogAction("正在重新获取IP...");
-            Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} {Setting.ADSLUser} {Setting.ADSLPassword}");
-            Thread.Sleep(3000);
+            result = Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} {Setting.ADSLUser} {Setting.ADSLPassword}");
+            //PrintLogAction(result);
+            Thread.Sleep(2000);
         }
 
 
