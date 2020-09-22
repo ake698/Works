@@ -8,15 +8,16 @@ namespace WindowsFormsApp1
         public Action<bool> UpdateButtonAction;
         public Action<string> PrintLogAction;
         public Action<int> FinishTaskViewAction;
-        public Action<int> TaskListViewAction;
+        public Action<int, int, bool> TaskListViewAction;
 
 
-        private void TaskListView(int index)
+        private void TaskListView(int index, int count, bool flag)
         {
-            taskView.Items[index].SubItems[3].Text = "已完成";
+            taskView.Items[index].SubItems[3].Text = count.ToString();
+            taskView.Items[index].SubItems[4].Text = flag==true?"已完成":"未完成";
         }
 
-        private void AddTaskListViewAsync(int index) => this.Invoke(TaskListViewAction, index);
+        private void AddTaskListViewAsync(int index, int count, bool flag) => this.Invoke(TaskListViewAction, index, count, flag);
 
 
 

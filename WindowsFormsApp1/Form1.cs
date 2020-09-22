@@ -33,14 +33,16 @@ namespace WindowsFormsApp1
             taskView.LabelEdit = false;
             taskView.FullRowSelect = true;
             taskView.Columns.Add("编号", 40);
-            taskView.Columns.Add("网址", 290);
+            taskView.Columns.Add("网址", 220);
             taskView.Columns.Add("添加时间", 100);
+            taskView.Columns.Add("完成数", 60);
             taskView.Columns.Add("是否完成", 100);
             for (int i = 0; i < keys.Count; i++)
             {
                 var item = new ListViewItem($"NO.{i + 1}");
                 item.SubItems.Add(keys[i]);
                 item.SubItems.Add($"{DateTime.Now.ToString("HH:mm:ss")}");
+                item.SubItems.Add("0");
                 item.SubItems.Add("未完成");
                 taskView.Items.Add(item);
             }

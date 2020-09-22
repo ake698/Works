@@ -71,14 +71,6 @@ namespace WindowsFormsApp1
             }
             keyReader.Close();
             keyFileStream.Close();
-            //if (!Setting.Normal)
-            //{
-            //    Random rnd = new Random();
-            //    int rndIndex = rnd.Next(0, keys.Count);
-            //    string rndKey = keys[rndIndex];
-            //    keys.Clear();
-            //    keys.Add(rndKey);
-            //}
             return keys;
         }
 
@@ -186,7 +178,7 @@ namespace WindowsFormsApp1
             }
             reader.Close();
             stream.Close();
-            if (results.Count > 6)
+            if (results.Count > 7)
             {
                 Setting.ADSL = results[0];
                 Setting.ADSLUser = results[1];
@@ -195,6 +187,7 @@ namespace WindowsFormsApp1
                 Setting.SiteStayMax = StringToInt(results[4], Setting.SiteStayMax);
                 Setting.AdStayMin = StringToInt(results[5], Setting.AdStayMin);
                 Setting.AdStayMax = StringToInt(results[6], Setting.AdStayMax);
+                Setting.TaskInput = StringToInt(results[7], Setting.TaskInput);
             }
 
         }
@@ -211,6 +204,7 @@ namespace WindowsFormsApp1
             writer.WriteLine(Setting.SiteStayMax);
             writer.WriteLine(Setting.AdStayMin);
             writer.WriteLine(Setting.AdStayMax);
+            writer.WriteLine(Setting.TaskInput);
             writer.Close();
             stream.Close();
         }

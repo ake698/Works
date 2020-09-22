@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         public static string IPFileName = $"{DateTime.Now:yyyy-MM-dd}IP.txt";
         public static string IPPath { get { return Path.Combine(Dir, IPFileName); } }
         #endregion
-        public const string Auth = "http://119.29.79.210/";
+        public const string Auth = "https://blog.csdn.net/ake698/article/details/108741481";
         public static int IPCheckDays { get; set; } = 1;
         public static bool CheckRepeatIP { get; set; } = true;
 
@@ -46,5 +46,6 @@ namespace WindowsFormsApp1
         public static int AdStayMin { get; set; } = 3;
         public static int AdStayMax { get; set; } = 5;
 
+        public static int TaskInput { get; set; } = 5;
     }
 }

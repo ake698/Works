@@ -57,6 +57,8 @@
             this.edit_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
             this.cancel_button = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.task_input = new System.Windows.Forms.TextBox();
             this.adsl_setting.SuspendLayout();
             this.ip_gourp.SuspendLayout();
             this.task_setting.SuspendLayout();
@@ -64,6 +66,8 @@
             // 
             // adsl_setting
             // 
+            this.adsl_setting.Controls.Add(this.task_input);
+            this.adsl_setting.Controls.Add(this.label7);
             this.adsl_setting.Controls.Add(this.label13);
             this.adsl_setting.Controls.Add(this.ad_staytime_input2);
             this.adsl_setting.Controls.Add(this.ad_staytime_input1);
@@ -80,7 +84,7 @@
             this.adsl_setting.Controls.Add(this.label3);
             this.adsl_setting.Location = new System.Drawing.Point(208, 26);
             this.adsl_setting.Name = "adsl_setting";
-            this.adsl_setting.Size = new System.Drawing.Size(225, 199);
+            this.adsl_setting.Size = new System.Drawing.Size(225, 214);
             this.adsl_setting.TabIndex = 2;
             this.adsl_setting.TabStop = false;
             this.adsl_setting.Text = "参数设置";
@@ -115,7 +119,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(8, 154);
+            this.label14.Location = new System.Drawing.Point(8, 150);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(71, 12);
             this.label14.TabIndex = 31;
@@ -216,7 +220,7 @@
             this.ip_gourp.Controls.Add(this.grep_ip_checkbox);
             this.ip_gourp.Location = new System.Drawing.Point(9, 145);
             this.ip_gourp.Name = "ip_gourp";
-            this.ip_gourp.Size = new System.Drawing.Size(160, 82);
+            this.ip_gourp.Size = new System.Drawing.Size(160, 93);
             this.ip_gourp.TabIndex = 9;
             this.ip_gourp.TabStop = false;
             this.ip_gourp.Text = "IP设置";
@@ -224,7 +228,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(77, 47);
+            this.label19.Location = new System.Drawing.Point(77, 60);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(53, 12);
             this.label19.TabIndex = 10;
@@ -233,7 +237,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 47);
+            this.label2.Location = new System.Drawing.Point(5, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 9;
@@ -241,7 +245,7 @@
             // 
             // grep_ip_input
             // 
-            this.grep_ip_input.Location = new System.Drawing.Point(40, 42);
+            this.grep_ip_input.Location = new System.Drawing.Point(40, 55);
             this.grep_ip_input.Name = "grep_ip_input";
             this.grep_ip_input.Size = new System.Drawing.Size(31, 21);
             this.grep_ip_input.TabIndex = 8;
@@ -349,6 +353,23 @@
             this.cancel_button.UseVisualStyleBackColor = true;
             this.cancel_button.Click += new System.EventHandler(this.cancel_button_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(32, 180);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 12);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "任务量:";
+            // 
+            // task_input
+            // 
+            this.task_input.Location = new System.Drawing.Point(98, 179);
+            this.task_input.Name = "task_input";
+            this.task_input.Size = new System.Drawing.Size(112, 21);
+            this.task_input.TabIndex = 36;
+            this.task_input.Text = "5";
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -402,5 +423,7 @@
         private System.Windows.Forms.Button edit_button;
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.Button cancel_button;
+        private System.Windows.Forms.TextBox task_input;
+        private System.Windows.Forms.Label label7;
     }
 }

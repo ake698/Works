@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
 
         public Action<bool> UpdateButtonAction;
         public Action<string> PrintLogAction;
-        public Action<int> TaskListViewAction;
+        public Action<int, int, bool> TaskListViewAction;
 
 
         private ChromeDriver _driver;
@@ -35,16 +35,21 @@ namespace WindowsFormsApp1
         {
             for (int i = 0; i < _keys.Count; i++)
             {
-                // 更新IP
-                ChangeIP();
-                // 随机更新参数
-                RandomSetting();
-                // 初始化Chrome
-                InitChrome();
-                //Setting.Running = Utils.CheckAuth();
-                Doit(_keys[i]);
-                Dispose();
-                if (!Setting.Running) break;
+                for (int p = 0; p < Setting.TaskInput; p++)
+                {
+                    // 更新IP
+                    ChangeIP();
+                    // 随机更新参数
+                    RandomSetting();
+                    // 初始化Chrome
+                    InitChrome();
+                    //Setting.Running = Utils.CheckAuth();
+                    Doit(_keys[i]);
+                    Dispose();
+                    TaskListViewAction(i, p + 1, false);
+                    if (!Setting.Running) break;
+                }
+                TaskListViewAction(i, Setting.TaskInput, true);
                 PrintLogAction($"{_keys[i]} 点击完成");
             }
             UpdateButtonAction(false);
@@ -76,7 +81,15 @@ namespace WindowsFormsApp1
             PrintLogAction($"开始进入广告主页 {url} ...");
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
-            _driver.Navigate().GoToUrl(url);
+            try
+            {
+                _driver.Navigate().GoToUrl(url);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            Thread.Sleep(500);
             //PrintLogAction($"页面停留{_siteStayTime}秒");
             //Thread.Sleep(_siteStayTime * 1000);
             var adtags = _driver.FindElementsByClassName("img");

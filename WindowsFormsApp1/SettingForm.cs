@@ -36,6 +36,8 @@ namespace WindowsFormsApp1
             ad_staytime_input1.Text = Setting.AdStayMin.ToString();
             ad_staytime_input2.Text = Setting.AdStayMax.ToString();
 
+            task_input.Text = Setting.TaskInput.ToString();
+
             // 为更新统计数量
             Utils.LoadKeys();
             key_count_label.Text = Setting.KeyCount.ToString();
@@ -80,6 +82,7 @@ namespace WindowsFormsApp1
             Setting.SiteStayMax = GetIntSettingValue(site_stay_input2, Setting.SiteStayMin);
             Setting.AdStayMin = GetIntSettingValue(ad_staytime_input1);
             Setting.AdStayMax = GetIntSettingValue(ad_staytime_input2, Setting.AdStayMin);
+            Setting.TaskInput = GetIntSettingValue(task_input);
 
             Utils.SaveSetting();
             MessageBox.Show("保存成功！", "保存设置");
