@@ -32,7 +32,6 @@ namespace StudentGradeOrder
         {
             Student student = obj as Student;
 
-            //return student.grade - this.grade ;
             if(firstName.CompareTo(student.firstName) != 0)
             {
                 return firstName.CompareTo(student.firstName);
@@ -48,7 +47,7 @@ namespace StudentGradeOrder
             }
             else
             {
-                return -1;
+                return 0;
             }
             
         }

@@ -50,6 +50,7 @@ namespace InheritanceOfSuperHeroes
         // INSERT OVERRIDE FOR HasPower METHOD
         public override bool HasPower(SuperPower whatPower)
         {
+            if (!isEnhanced) return false;
             bool result = false;
             superPowers.ForEach(x => { if (x == whatPower) result = true; });
             return result;

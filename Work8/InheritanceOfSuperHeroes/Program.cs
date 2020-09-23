@@ -20,11 +20,11 @@ namespace InheritanceOfSuperHeroes
         static void Main(string[] args)
         {
 
-            TestHumans();
+            //TestHumans();
 
             TestEnhancedHumans();
 
-            TestSuperHumans();
+            //TestSuperHumansk();
 
             Console.Write("Press any key to exit ...");
             Console.ReadKey();
