@@ -96,9 +96,6 @@ namespace GoogleChrome
             ChromeDriverService service = ChromeDriverService.CreateDefaultService(driverDir);
             service.HideCommandPromptWindow = true;
             _driver = new ChromeDriver(service, option);
-            
-
-
         }
 
         private void SearchKey(string key)
@@ -190,8 +187,16 @@ namespace GoogleChrome
                 catch (Exception)
                 {
                     ExecutorJs("arguments[0].click();", link);
+                    PrintLogAction("Exception click...");
                 }
-                StayAdPage(flag.Value);
+                try
+                {
+                    StayAdPage(flag.Value);
+                }catch(Exception e)
+                {
+                    PrintLogAction(e.ToString());
+                    PrintLogAction(e.Message);
+                }
                 _driver.SwitchTo().Window(currentPage);
             }
         }
@@ -225,7 +230,7 @@ namespace GoogleChrome
 
         private void ExecutorJs(string js, params object[] args)
         {
-            IJavaScriptExecutor executor = _driver;
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
             executor.ExecuteScript(js,args);
         }
     }

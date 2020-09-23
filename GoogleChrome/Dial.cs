@@ -15,7 +15,7 @@ namespace GoogleChrome
             PrintLogAction("正在重新获取IP...");
             result = Utils.ExecuteCommandWithResult($"rasdial {Setting.ADSL} {Setting.ADSLUser} {Setting.ADSLPassword}");
             //PrintLogAction(result);
-            Thread.Sleep(2000);
+            Thread.Sleep(4000);
         }
 
 
