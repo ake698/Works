@@ -52,6 +52,7 @@ namespace WindowsFormsApp1
         private void startButton_Click(object sender, EventArgs e)
         {
             InitListView();
+            Utils.LoadSetting();
             Setting.Running = true;
             if (keys.Count < 1)
             {

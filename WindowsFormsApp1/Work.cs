@@ -35,7 +35,7 @@ namespace WindowsFormsApp1
         {
             for (int i = 0; i < _keys.Count; i++)
             {
-                for (int p = 0; p < Setting.TaskInput; p++)
+                for (int p = 0; p < Setting.TaskInput;)
                 {
                     // 更新IP
                     ChangeIP();
@@ -44,9 +44,9 @@ namespace WindowsFormsApp1
                     // 初始化Chrome
                     InitChrome();
                     //Setting.Running = Utils.CheckAuth();
-                    Doit(_keys[i]);
+                    p += Doit(_keys[i]);
                     Dispose();
-                    TaskListViewAction(i, p + 1, false);
+                    TaskListViewAction(i, p, false);
                     if (!Setting.Running) break;
                 }
                 TaskListViewAction(i, Setting.TaskInput, true);
@@ -76,7 +76,7 @@ namespace WindowsFormsApp1
         }
 
 
-        private void Doit(string url)
+        private int Doit(string url)
         {
             PrintLogAction($"开始进入广告主页 {url} ...");
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
@@ -87,38 +87,40 @@ namespace WindowsFormsApp1
             }
             catch (Exception)
             {
-                return;
+                return 0;
             }
-            Thread.Sleep(500);
             //PrintLogAction($"页面停留{_siteStayTime}秒");
             //Thread.Sleep(_siteStayTime * 1000);
             var adtags = _driver.FindElementsByClassName("img");
 
-            Debug.WriteLine(adtags.Count);
+            //Debug.WriteLine(adtags.Count);
 
-            var currentPage = _driver.CurrentWindowHandle;
+            //var currentPage = _driver.CurrentWindowHandle;
+            int tempCount = 0;
             foreach (var ad in adtags)
             {
                 try
                 {
                     ad.Click();
+                    tempCount++;
                 }
                 catch (Exception)
                 {
                     continue;
                 }
                 StayAdPage();
-                _driver.SwitchTo().Window(currentPage);
+                //_driver.SwitchTo().Window(currentPage);
+                if (tempCount >= 1) break;
             }
-
+            return 1;
         }
 
 
         private void StayAdPage()
         {
-            PrintLogAction($"进入广告界面...");
-            Thread.Sleep(1000);
+            
             _driver.SwitchTo().Window(_driver.WindowHandles.Last());
+            PrintLogAction($"进入广告界面...开始停留{_stayADTime}秒");
             for (int i = 0; i < _stayADTime; i++)
             {
                 try
