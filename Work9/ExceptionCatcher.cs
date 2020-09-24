@@ -74,26 +74,29 @@ namespace BirthdayApp
                 Console.WriteLine($"Invalid format: {errorMessage}");
                 if (errorMessage.Contains("DateTime"))
                 {
-                    Console.WriteLine("Please use format DD/MM/YYYY for date of birth.");
+                    Console.WriteLine("Please enter a suitable date of birth.");
                 }
                 else
                 {
-                    Console.WriteLine("Please supply an integer value for phone number.");
+                    Console.WriteLine("An integer value is required for phone number.");
                 }
+                return null;
             }
             catch(ArgumentException e)
             {
                 string errorMessage = e.Message;
-                Console.WriteLine($"Invalid format: {errorMessage}");
-                Console.WriteLine("Please enter Male, Female, or Other for gender.");
+                Console.WriteLine($"Invalid argument: {errorMessage}");
+                Console.WriteLine("Please ensure gender is Female, Male, or Other.");
+                return null;
             }catch(Exception e)
             {
                 string errorMessage = e.Message;
                 Console.WriteLine($"Unknow Error: {errorMessage}");
+                return null;
             }
 
             // INSERT CODE HERE
-
+            Console.WriteLine("Operation was successful!");
             return result;
         }
     }

@@ -35,7 +35,7 @@ namespace RecipeApp
         {
             // INSERT CODE HERE
             if (quantity <= 0) throw new ArgumentOutOfRangeException("quantity", "Quantity may not be equal to or less than zero.");
-            if(units.Trim().Equals("")) throw new ArgumentOutOfRangeException("units", "Either a null reference or non-blank string is required.");
+            if(units != null && units.Trim().Equals("")) throw new ArgumentException( "Either a null reference or non-blank string is required.","units");
             Quantity = quantity;
             Units = units;
         }
@@ -54,7 +54,7 @@ namespace RecipeApp
         public void Scale (double factor)
         {
             // INSERT CODE HERE
-            if (factor <= 0) throw new ArgumentOutOfRangeException("factor", "Scale may not be equal to or less than zero.");
+            if (!(factor > 0)) throw new ArgumentOutOfRangeException("factor", "Scale may not be equal to or less than zero.");
             Quantity *= factor;
         }
 
@@ -126,9 +126,9 @@ namespace RecipeApp
         public void Add (string ingredientName, Measure quantity)
         {
             // INSERT CODE HERE
-            if (ingredientName == null) throw new ArgumentNullException("ingredientName", "Non-null string is required for ingredient name.");
+            if (ingredientName is null) throw new ArgumentNullException("ingredientName", "Non-null string is required for ingredient name.");
             if (quantity == null) throw new ArgumentNullException("quantity", "Non-null quantity is required.");
-            if (string.IsNullOrWhiteSpace(ingredientName)) throw new ArgumentException("ingredientName", "Ingredient name must not be empty or white space.");
+            if (string.IsNullOrWhiteSpace(ingredientName)) throw new ArgumentException("Ingredient name must not be empty or white space.", "ingredientName");
             ingredients.Add(ingredientName, quantity);
         }
 
@@ -199,7 +199,7 @@ namespace RecipeApp
             get { return servings; }
             set {
                 // INSERT CODE HERE
-                if (value <= 0) throw new ArgumentOutOfRangeException("Serves may not be equal to or less than zero.");
+                if (!(value > 0)) throw new ArgumentOutOfRangeException("Servings", "Serves may not be equal to or less than zero.");
                 double scaleFactor = (double)value / servings;
 
                 foreach ( Measure measurement in ingredients.Values )
@@ -345,7 +345,7 @@ namespace RecipeApp
             bool success = shoppingList.Remove(name);
             string status = success ? "removed from" : "not found in";
             Console.Out.WriteLine($"Item '{name}' {status} shopping list.");
-
+            Console.Write(shoppingList.ToString());
             return true;
         }
 
