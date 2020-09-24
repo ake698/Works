@@ -101,22 +101,31 @@ namespace GoogleChrome
         private void SearchKey(string key)
         {
             PrintLogAction($"开始关键词 {key} 操作...");
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-
-            _driver.Navigate().GoToUrl(Setting.SearchFrom);
-            var input = _driver.FindElementById("kw");
-            input.Click();
-            input.SendKeys(key);
-            _driver.FindElementById("su").Click();
-
-            // wait it until page done
-            wait.Until(ExpectedConditions.ElementExists((By.Id("content_left"))));
-
-            // wait it until page done
-            var content = wait.Until((d) =>
+            IWebElement content = null;
+            try
             {
-                return _driver.FindElementById("content_left");
-            });
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+
+                _driver.Navigate().GoToUrl(Setting.SearchFrom);
+                var input = _driver.FindElementById("kw");
+                input.Click();
+                input.SendKeys(key);
+                _driver.FindElementById("su").Click();
+
+                // wait it until page done
+                wait.Until(ExpectedConditions.ElementExists((By.Id("content_left"))));
+
+                // wait it until page done
+                content = wait.Until((d) =>
+                {
+                    return _driver.FindElementById("content_left");
+                });
+            } catch (Exception e)
+            {
+                PrintLogAction("Search Exception!");
+                return;
+            }
+            
             PrintLogAction($"搜索页面停留 {_staySearchTime}秒...");
             Thread.Sleep(_staySearchTime * 1000);
             var pmds = content.FindElements(By.ClassName("new-pmd"));
