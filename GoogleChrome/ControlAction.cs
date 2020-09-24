@@ -1,10 +1,15 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace GoogleChrome
 {
     public partial class Form1
     {
+        public FileStream logStream;
+        public StreamWriter logWriter;
+
         public Action<bool> UpdateButtonAction;
         public Action<string> PrintLogAction;
         public Action<int> FinishTaskViewAction;
@@ -32,6 +37,9 @@ namespace GoogleChrome
             string time = DateTime.Now.ToString("HH:mm:ss");
             logBox.AppendText($"{time}: {log}");
             logBox.AppendText(Environment.NewLine);
+
+            logWriter.WriteLine($"{time}: {log}");
+            logWriter.Flush();
         }
 
         private void PrintLogAsync(string log) => Invoke(PrintLogAction, log);
@@ -69,6 +77,20 @@ namespace GoogleChrome
             UpdateButtonAction = UpdateButtonWhenStartAndStop;
             PrintLogAction = PrintLog;
             AddTaskListViewAction = AddTaskListView;
+        }
+
+        private void InitLogStream()
+        {
+            CloseLogStream();   
+            Utils.FileHanler(Setting.LogFileName);
+            logStream = new FileStream(Setting.LogPath, FileMode.Create);
+            logWriter = new StreamWriter(logStream, Encoding.GetEncoding("gb2312"));
+        }
+
+        private void CloseLogStream()
+        {
+            if (logWriter != null) logWriter.Close();
+            if (logStream != null) logStream.Close();
         }
     }
 }

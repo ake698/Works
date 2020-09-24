@@ -194,10 +194,19 @@ namespace GoogleChrome
                     StayAdPage(flag.Value);
                 }catch(Exception e)
                 {
-                    PrintLogAction(e.ToString());
-                    PrintLogAction(e.Message);
+                    PrintLogAction("Stay timeout...");
+                    //PrintLogAction(e.ToString());
+                    //PrintLogAction(e.Message);
                 }
-                _driver.SwitchTo().Window(currentPage);
+                try
+                {
+                    _driver.SwitchTo().Window(currentPage);
+                }
+                catch(Exception e)
+                {
+                    PrintLogAction("Switch Timeout...");
+                    break;
+                }
             }
         }
 
@@ -220,13 +229,18 @@ namespace GoogleChrome
 
                     PrintLogAction("该页面超时...");
                     Thread.Sleep(2000);
-                    break;
+                    StopPage();
                 }
 
             }
             Thread.Sleep(1000);
         }
 
+
+        private void StopPage()
+        {
+            ExecutorJs("window.stop()");
+        }
 
         private void ExecutorJs(string js, params object[] args)
         {

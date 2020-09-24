@@ -59,7 +59,8 @@ namespace GoogleChrome
             }
             // 开始运行
             UpdateButtonAction(true);
-
+            // 初始化日志流
+            InitLogStream();
             work = new Work(keys);
             work.UpdateButtonAction = UpdateButtonAsync;
             work.PrintLogAction = PrintLogAsync;

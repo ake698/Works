@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.Internal;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace GoogleChrome
 
         public static string IPFileName = $"{DateTime.Now:yyyy-MM-dd}IP.txt";
         public static string IPPath { get { return Path.Combine(Dir, IPFileName); } }
+
+        public const string LogFileName = "Log.txt";
+        public static string LogPath { get{ return Path.Combine(Dir, LogFileName); } }
         #endregion
         public const string Auth = "http://119.29.79.210/";
 
