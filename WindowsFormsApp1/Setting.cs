@@ -31,6 +31,8 @@ namespace WindowsFormsApp1
         public static string ReadMePath { get { return Path.Combine(Dir, ReadMe); } }
 
 
+        public const string ProcessName = "chrome";
+
         public static bool Running { get; set; } = true;
 
         public static string ADSL { get; set; } = "adsl";

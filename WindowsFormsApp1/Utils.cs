@@ -246,5 +246,27 @@ namespace WindowsFormsApp1
                 return result;
             }
         }
+
+
+
+        public static void KillProcess(string strProcessesByName)
+        {
+            foreach (Process p in Process.GetProcesses())
+            {
+                if (p.ProcessName.ToUpper().Contains(strProcessesByName.ToUpper()))
+                {
+                    Console.WriteLine(p.ProcessName);
+                    try
+                    {
+                        p.Kill();
+                        p.WaitForExit();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message.ToString());
+                    }
+                }
+            }
+        }
     }
 }

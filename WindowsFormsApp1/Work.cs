@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace WindowsFormsApp1
                 for (int p = 0; p < Setting.TaskInput;)
                 {
                     // 更新IP
-                    ChangeIP();
+                    //ChangeIP();
                     // 随机更新参数
                     RandomSetting();
                     // 初始化Chrome
@@ -73,6 +74,7 @@ namespace WindowsFormsApp1
             ChromeDriverService service = ChromeDriverService.CreateDefaultService(driverDir);
             service.HideCommandPromptWindow = true;
             _driver = new ChromeDriver(service, option);
+            _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
         }
 
 
@@ -87,11 +89,20 @@ namespace WindowsFormsApp1
             }
             catch (Exception)
             {
+                StopPage();
+            }
+            PrintLogAction($"获取广告...");
+            StopPage();
+            //Thread.Sleep(_siteStayTime * 1000);
+            ReadOnlyCollection<IWebElement> adtags = null;
+            try
+            {
+                adtags = _driver.FindElementsByClassName("img");
+            }
+            catch (Exception)
+            {
                 return 0;
             }
-            //PrintLogAction($"页面停留{_siteStayTime}秒");
-            //Thread.Sleep(_siteStayTime * 1000);
-            var adtags = _driver.FindElementsByClassName("img");
 
             //Debug.WriteLine(adtags.Count);
 
@@ -118,9 +129,9 @@ namespace WindowsFormsApp1
 
         private void StayAdPage()
         {
-            
             _driver.SwitchTo().Window(_driver.WindowHandles.Last());
             PrintLogAction($"进入广告界面...开始停留{_stayADTime}秒");
+            StopPage();
             for (int i = 0; i < _stayADTime; i++)
             {
                 try
@@ -141,6 +152,11 @@ namespace WindowsFormsApp1
         }
 
 
+        private void StopPage()
+        {
+            ExecutorJs("window.stop()");
+        }
+
         private void ExecutorJs(string js, params object[] args)
         {
             IJavaScriptExecutor executor = _driver;
@@ -151,6 +167,7 @@ namespace WindowsFormsApp1
         public void Dispose()
         {
             if (_driver != null) _driver.Quit();
+            Utils.KillProcess(Setting.ProcessName);
             PrintLogAction("程序关闭!");
         }
     }
