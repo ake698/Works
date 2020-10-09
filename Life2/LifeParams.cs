@@ -40,6 +40,7 @@ namespace Life
         public int Memory = 16;
         // --output
         public string OutPutFilePath = null;
+        public string OutPutFileFullPath = null;
 
         public LifeParams(string[] args)
         {
@@ -47,7 +48,7 @@ namespace Life
 
             PopulateParms();
 
-            if (paramBuild) ConsoleSuccessMsg("Command line arguments processed.");
+            if (paramBuild) Utils.ConsoleSuccessMsg("Command line arguments processed.");
 
         }
 
@@ -83,13 +84,13 @@ namespace Life
 
                 if (!FilePath.EndsWith(".seed"))
                 {
-                    ConsoleErrorMsg("Input File: Valid paths with a .seed file extension ");
+                    Utils.ConsoleErrorMsg("Input File: Valid paths with a .seed file extension ");
                     FilePath = null;
                     paramBuild = false;
                 }
                 else if (!File.Exists(FilePath))
                 {
-                    ConsoleErrorMsg("Input File: No such file ");
+                    Utils.ConsoleErrorMsg("Input File: No such file ");
                     FilePath = null;
                     paramBuild = false;
                 }
@@ -99,12 +100,11 @@ namespace Life
             {
                 if (dic["--dimensions"].Count == 2)
                 {
-                    int tempRows = Rows, tempColums = Colums;
-                    int.TryParse(dic["--dimensions"][0], out tempRows);
-                    int.TryParse(dic["--dimensions"][1], out tempColums);
+                    int.TryParse(dic["--dimensions"][0], out int tempRows);
+                    int.TryParse(dic["--dimensions"][1], out int tempColums);
                     if (tempRows < 4 || tempRows > 48 || tempColums < 4 || tempColums > 48)
                     {
-                        ConsoleErrorMsg("Dimensions: Integer values between 4 and 48 (inclusive)");
+                        Utils.ConsoleErrorMsg("Dimensions: Integer values between 4 and 48 (inclusive)");
                         paramBuild = false;
                     }
                     else
@@ -119,11 +119,10 @@ namespace Life
 
             if (dic.ContainsKey("--random"))
             {
-                decimal tempRandom;
-                decimal.TryParse(dic["--random"][0], out tempRandom);
+                decimal.TryParse(dic["--random"][0], out decimal tempRandom);
                 if (tempRandom > 1)
                 {
-                    ConsoleErrorMsg("Random Factor: Floating point values between 0 and 1 (inclusive)");
+                    Utils.ConsoleErrorMsg("Random Factor: Floating point values between 0 and 1 (inclusive)");
                     paramBuild = false;
                 }
                 else
@@ -134,11 +133,10 @@ namespace Life
 
             if (dic.ContainsKey("--generations"))
             {
-                int tempgen;
-                int.TryParse(dic["--generations"][0], out tempgen);
+                int.TryParse(dic["--generations"][0], out int tempgen);
                 if (tempgen < 0)
                 {
-                    ConsoleErrorMsg("Generations: Integer values above 0");
+                    Utils.ConsoleErrorMsg("Generations: Integer values above 0");
                     paramBuild = false;
                 }
                 else
@@ -149,11 +147,10 @@ namespace Life
 
             if (dic.ContainsKey("--max-update"))
             {
-                int tempRate;
-                int.TryParse(dic["--max-update"][0], out tempRate);
+                int.TryParse(dic["--max-update"][0], out int tempRate);
                 if (tempRate < 1 || tempRate > 30)
                 {
-                    ConsoleErrorMsg("Update Rate: Floating point values between 1 and 30 (inclusive)");
+                    Utils.ConsoleErrorMsg("Update Rate: Floating point values between 1 and 30 (inclusive)");
                     paramBuild = false;
                 }
                 else
@@ -167,28 +164,25 @@ namespace Life
             if (dic.ContainsKey("--neighbour"))
             {
                 string type = dic["--neighbour"][0].ToUpper();
-                Neighbourhood tempNeighbourhood;
-                if(!Enum.TryParse(type, out tempNeighbourhood))
+                if (!Enum.TryParse(type, out Neighbourhood tempNeighbourhood))
                 {
                     tempNeighbourhood = Neighbourhood;
                     paramBuild = false;
-                    ConsoleErrorMsg("Neighbourhood: The neighbourhood type must be one of two strings, either 'moore' or 'vonNeumann', case insensitive");
+                    Utils.ConsoleErrorMsg("Neighbourhood: The neighbourhood type must be one of two strings, either 'moore' or 'vonNeumann', case insensitive");
                 }
-                int tempOrder;
-                int.TryParse(dic["--neighbour"][1], out tempOrder);
-                if(!(tempOrder >= 1 && tempOrder <= 10 && tempOrder < Math.Min(Rows,Colums)*2))
+                int.TryParse(dic["--neighbour"][1], out int tempOrder);
+                if (!(tempOrder >= 1 && tempOrder <= 10 && tempOrder < Math.Min(Rows,Colums)*2))
                 {
                     tempOrder = Order;
                     paramBuild = false;
-                    ConsoleErrorMsg("Neighbourhood: The order must be an integer between 1 and 10 (inclusive) and less than half of the smallest dimensions (rows or columns).");
+                    Utils.ConsoleErrorMsg("Neighbourhood: The order must be an integer between 1 and 10 (inclusive) and less than half of the smallest dimensions (rows or columns).");
                 }
 
-                bool tempCenter;
-                if(!bool.TryParse(dic["--neighbour"][2], out tempCenter))
+                if (!bool.TryParse(dic["--neighbour"][2], out bool tempCenter))
                 {
                     tempCenter = Center;
                     paramBuild = false;
-                    ConsoleErrorMsg("Neighbourhood: The center-count must be one of two strings, either 'true' or 'false'.");
+                    Utils.ConsoleErrorMsg("Neighbourhood: The center-count must be one of two strings, either 'true' or 'false'.");
                 }
                 Neighbourhood = tempNeighbourhood;
                 Order = tempOrder;
@@ -204,10 +198,9 @@ namespace Life
                 for (int i = 0; i < values.Length; i++)
                 {
                     string temp = values[i];
-                    int tempValue;
-                    if(!int.TryParse(temp, out tempValue))
+                    if (!int.TryParse(temp, out int tempValue))
                     {
-                        ConsoleErrorMsg("Survival: The survival must be integer.");
+                        Utils.ConsoleErrorMsg("Survival: The survival must be integer.");
                         tempSurvival = Survival;
                         paramBuild = false;
                         break;
@@ -216,7 +209,7 @@ namespace Life
                     {
                         tempSurvival = Survival;
                         paramBuild = false;
-                        ConsoleErrorMsg("Survival: The birth must greate than 0.");
+                        Utils.ConsoleErrorMsg("Survival: The birth must greate than 0.");
                         break;
                     }
                     tempSurvival[i] = tempValue;
@@ -233,10 +226,9 @@ namespace Life
                 for (int i = 0; i < values.Length; i++)
                 {
                     string temp = values[i];
-                    int tempValue;
-                    if (!int.TryParse(temp, out tempValue))
+                    if (!int.TryParse(temp, out int tempValue))
                     {
-                        ConsoleErrorMsg("Birth: The birth must be integer.");
+                        Utils.ConsoleErrorMsg("Birth: The birth must be integer.");
                         paramBuild = false;
                         tempBirth = Birth;
                         break;
@@ -244,7 +236,7 @@ namespace Life
                     if (tempValue <= 0)
                     {
                         tempBirth = Birth;
-                        ConsoleErrorMsg("Birth: The birth must greate than 0.");
+                        Utils.ConsoleErrorMsg("Birth: The birth must greate than 0.");
                         paramBuild = false;
                         break;
                     }
@@ -256,11 +248,10 @@ namespace Life
 
             if (dic.ContainsKey("--memory"))
             {
-                int tempMemory;
-                int.TryParse(dic["--memory"][0], out tempMemory);
+                int.TryParse(dic["--memory"][0], out int tempMemory);
                 if (tempMemory < 4 || tempMemory > 512)
                 {
-                    ConsoleErrorMsg("Memory: Integer values between 4 and 512(inclusive).");
+                    Utils.ConsoleErrorMsg("Memory: Integer values between 4 and 512(inclusive).");
                     paramBuild = false;
                     tempMemory = Memory;
                 }
@@ -269,25 +260,20 @@ namespace Life
 
             if (dic.ContainsKey("--output"))
             {
-
+                string filePath = dic["--output"][0];
+                if (filePath.EndsWith(".seed"))
+                {
+                    string directory = Path.GetDirectoryName(filePath);
+                    Directory.CreateDirectory(directory);
+                }
+                OutPutFilePath = filePath;
+                OutPutFileFullPath = Path.GetFullPath(filePath);
             }
 
             Ghost = dic.ContainsKey("--ghost") ? true : false;
 
         }
 
-        private void ConsoleErrorMsg(string msg)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] Warning: {msg}");
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        private void ConsoleSuccessMsg(string msg)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] Success: {msg}");
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+        
     }
 }

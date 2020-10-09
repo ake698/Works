@@ -2,9 +2,18 @@
   "profiles": {
     "Life2": {
       "commandName": "Project",
-      //"commandLineArgs": "--neighbour vonNeumann 1 true --dimensions 47 47 --generations 100 --max-update 10 --birth 1 --survival 1 --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\gnarl-hanabi1_47x47.seed --step"
-      //"commandLineArgs": "--neighbour Moore 5 true --dimensions 48 48 --generations 300 --max-update 15 --periodic --birth 35...45 --survival 34...58 --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --step"
-      "commandLineArgs": "--step --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed"
+      //"commandLineArgs": "--step --ghost",
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\gnarl-hanabi1_47x47.seed --max-update 10 --dimensions 47 47 --generations 100 --birth 1 --survival 1 --neighbour vonNeumann 1 true"
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target2_16x16.seed "
+      // cycle == 2
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed"
+      // bug
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --max-update 15 --dimensions 48 48 --generations 300 --periodic --birth 34...45 --survival 34...58 --neighbour Moore 5 true"
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --max-update 15 --dimensions 15 20 --memory 4"
+      // cycle = 9
+      //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --max-update 15 --dimensions 15 20"
+      //"commandLineArgs": "--neighbour vonNeumann 1 false"
+      "commandLineArgs": "--output C:\\Users\\admin\\Desktop\\output.seed"
     }
   }
 }

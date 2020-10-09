@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Life
@@ -14,10 +15,24 @@ namespace Life
         private Grid grid;
         private Cell[][] cells;
         private int version = 1;
-        private List<Cell[][]> ghost;
-        private List<Cell[][]> memory;
+        private List<List<int[]>> ghost;
+        private List<List<int[]>> memory;
+        private List<CellState> cellStates;
+        private int periodictity;
+        private bool isSteadyState;
+        private bool allDieOrConstant;
 
-        public LifeGenerate(string[] args)
+        private LifeGenerate()
+        {
+            ghost = new List<List<int[]>>();
+            memory = new List<List<int[]>>();
+            cellStates = new List<CellState> { CellState.Light, CellState.Medium, CellState.Dark };
+            isSteadyState = false;
+            allDieOrConstant = false;
+            periodictity = -1;
+        }
+
+        public LifeGenerate(string[] args):this()
         {
             // Initialization parameters
             lifeParams = new LifeParams(args);
@@ -27,12 +42,13 @@ namespace Life
             PrintParams();
         }
 
+
         /// <summary>
         /// Display the runtime settings
         /// </summary>
         private void PrintParams()
         {
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] The program will use the following settings:");
+            Console.WriteLine($"[{DateTime.Now:HH:MM:ss:fff}] The program will use the following settings:");
             Console.WriteLine();
             Console.WriteLine($"\t\t Input File: {lifeParams.FilePath ?? "N/A"}");
             Console.WriteLine($"\t\tOutput File: {lifeParams.OutPutFilePath ?? "N/A"}");
@@ -45,7 +61,7 @@ namespace Life
             Console.WriteLine($"\t\t   Periodic: {periodicStr}");
             Console.WriteLine($"\t\t        Row: {lifeParams.Rows}");
             Console.WriteLine($"\t\t    Columns: {lifeParams.Colums}");
-            Console.WriteLine($"\t      Random Factor: {(lifeParams.Random * 100).ToString("#0.00")} %");
+            Console.WriteLine($"\t      Random Factor: {lifeParams.Random * 100:#0.00} %");
             var stepMode = lifeParams.Step == true ? "Yes" : "No";
             Console.WriteLine($"\t\t  Step Mode: {stepMode}");
             var ghostMode = lifeParams.Ghost == true ? "Yes" : "No";
@@ -67,7 +83,7 @@ namespace Life
             for (int i = 1; i <= lifeParams.Generations; i++)
             {
                 watch.Restart();
-                NextGenerate();
+                var running = NextGenerate();
                 grid.SetFootnote($"Iteration:{i}");
                 // Render updates to the console window...
                 grid.Render();
@@ -78,7 +94,11 @@ namespace Life
                 else
                 {
                     while (watch.ElapsedMilliseconds < (1000 / lifeParams.Rate)) ;
-
+                }
+                if (!running)
+                {
+                    isSteadyState = true;
+                    break;
                 }
             }
             End();
@@ -91,36 +111,105 @@ namespace Life
             grid.Render();
             Console.ReadKey();
 
+            // output file
+            if(lifeParams.OutPutFilePath != null)OutPutToFile();
+
             // go back
             grid.RevertWindow();
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:MM:ss:fff")}] Press spacebar to close program...");
+            string periodicityStr = allDieOrConstant == true ? "N/A" : periodictity.ToString();
+            if (isSteadyState) Console.WriteLine($"[{DateTime.Now:HH:MM:ss:fff}] Steady-state detected... periodicity = {periodicityStr}");
+            else Console.WriteLine($"[{DateTime.Now:HH:MM:ss:fff}] Steady-state not detected...");
+            if(lifeParams.OutPutFilePath != null) Utils.ConsoleSuccessMsg($"Final generation written to file: {lifeParams.OutPutFilePath}");
+            Console.WriteLine($"[{DateTime.Now:HH:MM:ss:fff}] Press spacebar to close program...");
             Console.ReadKey();
         }
 
+        private void OutPutToFile()
+        {
+            FileStream file = new FileStream(lifeParams.OutPutFileFullPath, FileMode.Create);
+            StreamWriter sw = new StreamWriter(file);
+            var lastGenerate = memory[^1];
+            sw.WriteLine("#version=2.0");
+            lastGenerate.ForEach(x =>
+            {
+                sw.WriteLine($"(o) cell: {x[0]}, {x[1]}");
+            });
 
+             sw.Close();
+            file.Close();
+        }
         #region Generate
         /// <summary>
         /// Show life
         /// </summary>
-        private void NextGenerate()
+        private bool NextGenerate()
         {
-            List<int[]> list = new List<int[]>();
+            List<int[]> currentGenerateList = new List<int[]>();
+            List<int[]> lastGenerateList = new List<int[]>();
             for (int i = 0; i < lifeParams.Rows; i++)
             {
                 for (int p = 0; p < lifeParams.Colums; p++)
                 {
-                    var a = cells[i][p];
-                    var state = a.GetState();
+                    var cell = cells[i][p];
+                    var state = cell.GetState();
+                    if(state == CellState.Full)
+                    {
+                        int[] arr = new int[] { i, p };
+                        lastGenerateList.Add(arr);
+                    }
                     bool result = LiveOrDead(i, p, state);
                     if (result)
                     {
                         int[] arr = new int[] { i, p };
-                        list.Add(arr);
+                        currentGenerateList.Add(arr);
                     }
                     //grid.UpdateCell(i, p, reuslt == true ? CellState.Full : CellState.Blank);
                 }
             }
 
+            if (ghost.Count >= 3) ghost.RemoveAt(0);
+            ghost.Add(lastGenerateList);
+
+            if (memory.Count >= lifeParams.Memory) memory.RemoveAt(0);
+            memory.Add(lastGenerateList);
+
+            if (lastGenerateList.EqualList(currentGenerateList))
+            {
+                allDieOrConstant = true;
+                return false;
+            }
+
+            // cycle
+            if (IsCycle(currentGenerateList)) return false;
+
+            UpdateCell(currentGenerateList);
+            return true;
+        }
+
+        /// <summary>
+        /// Determine whether there is a repetition in the cycle
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        private bool IsCycle(List<int[]> target)
+        {
+            for (int i = 0; i < memory.Count; i++)
+            {
+                if (memory[i].EqualList(target))
+                {
+                    periodictity = memory.Count - i;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Update Cell
+        /// </summary>
+        /// <param name="nextGenerateList"></param>
+        private void UpdateCell(List<int[]> nextGenerateList)
+        {
             for (int i = 0; i < lifeParams.Rows; i++)
             {
                 for (int p = 0; p < lifeParams.Colums; p++)
@@ -129,7 +218,28 @@ namespace Life
                 }
             }
 
-            list.ForEach(x => grid.UpdateCell(x[0], x[1], CellState.Full));
+            if (lifeParams.Ghost)
+            {
+                if (ghost.Count < 3)
+                {
+                    int cellIndex = 2;
+                    for (int i = ghost.Count - 1; i >= 0; i--)
+                    {
+                        ghost[i].ForEach(x => grid.UpdateCell(x[0], x[1], cellStates[cellIndex]));
+                        cellIndex--;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < ghost.Count; i++)
+                    {
+                        ghost[i].ForEach(x => grid.UpdateCell(x[0], x[1], cellStates[i]));
+                    }
+                }
+                
+            }
+
+            nextGenerateList.ForEach(x => grid.UpdateCell(x[0], x[1], CellState.Full));
         }
 
         /// <summary>
@@ -141,10 +251,6 @@ namespace Life
         /// <returns></returns>
         private bool LiveOrDead(int x, int y, CellState state)
         {
-            if (x == 22 && y == 22)
-            {
-                var a = "dd";
-            }
             int count = CountAlive(x, y);
             if (state == CellState.Full)
             {
@@ -169,59 +275,6 @@ namespace Life
         /// <param name="x">row</param>
         /// <param name="y">column</param>
         /// <returns></returns>
-        private int CountAliveOld(int x, int y)
-        {
-            int live = 0;
-            Cell tmp;
-            // Moor
-            for (int i = -1 * lifeParams.Order; i <= 1 * lifeParams.Order; i++)
-            {
-                for (int p = -1 * lifeParams.Order; p <= 1 * lifeParams.Order; p++)
-                {
-                    int tx = x, ty = y;
-                    // self
-                    if (i == p && i == 0 && !lifeParams.Center) continue;
-                    if (lifeParams.Periodic)
-                    {
-                        if (tx + i < 0)
-                        {
-                            tx = cells.Length - Math.Abs(tx + i);
-                        }
-                        else if (tx + i > cells.Length - 1)
-                        {
-                            tx = (tx + i) % cells.Length;
-                        }
-                        else
-                        {
-                            tx += i;
-                        }
-                        if (ty + p < 0)
-                        {
-                            ty = cells[0].Length - Math.Abs(ty + p);
-                        }
-                        else if (ty + p > cells[0].Length - 1)
-                        {
-                            ty = (ty + p) % cells[0].Length;
-                        }
-                        else
-                        {
-                            ty += p;
-                        }
-                    }
-                    else
-                    {
-                        if (tx + i < 0 || tx + i > cells.Length - 1 || ty + p < 0 || ty + p > cells[0].Length - 1) continue;
-                        tx = tx + i;
-                        ty = ty + p;
-                    }
-
-                    tmp = cells[tx][ty];
-                    if (tmp.GetState() == CellState.Full) live++;
-                }
-            }
-            return live;
-        }
-
         private int CountAlive(int x, int y)
         {
             int live = 0;
@@ -235,7 +288,6 @@ namespace Life
                     int tx = x, ty = y;
                     if (lifeParams.Periodic)
                     {
-                        int dis = 0;
                         if (tx + i < 0)
                         {
                             tx = cells.Length - Math.Abs(tx + i);
@@ -251,17 +303,14 @@ namespace Life
                         if (ty + p < 0)
                         {
                             ty = cells[0].Length - Math.Abs(ty + p);
-                            //dis = cells[0].Length - p + y;
                         }
                         else if (ty + p > cells[0].Length - 1)
                         {
                             ty = (ty + p) % cells[0].Length;
-                            //dis = cells[0].Length - y + p;
                         }
                         else
                         {
                             ty += p;
-                            //dis = p;
                         }
                         if (p > order && lifeParams.Neighbourhood == Neighbourhood.VONNEUMANN) continue;
                     }
@@ -269,12 +318,8 @@ namespace Life
                     {
                         if (tx + i < 0 || tx + i > cells.Length - 1 || ty + p < 0 || ty + p > cells[0].Length - 1) continue;
                         if (Math.Abs(p) > order && lifeParams.Neighbourhood == Neighbourhood.VONNEUMANN) continue;
-                        tx = tx + i;
-                        ty = ty + p;
-                        if (i == p && i== 0)
-                        {
-                            var c = "dd";
-                        }
+                        tx += i;
+                        ty += p;
                     }
                     tmp = cells[tx][ty];
                     if (tmp.GetState() == CellState.Full) live++;
@@ -325,7 +370,7 @@ namespace Life
                 string filePath = args.FilePath;
 
                 var fparrs = filePath.Split(@"\");
-                string fileName = fparrs[fparrs.Length - 1];
+                string fileName = fparrs[^1];
                 string pattern = @"(\d+)x(\d+)";
                 var matches = Regex.Matches(fileName, pattern);
                 if (matches.Count > 0)
@@ -367,7 +412,7 @@ namespace Life
                     var arrs = line.Replace(",","").Split(" ");
                     
                     string type = arrs[1];
-                    if (type.Equals("cell", StringComparison.OrdinalIgnoreCase))
+                    if (type.Equals("cell:", StringComparison.OrdinalIgnoreCase))
                     {
                         if (arrs[0].Contains("o"))
                             grid.UpdateCell(int.Parse(arrs[2]), int.Parse(arrs[3]), CellState.Full);
@@ -382,6 +427,11 @@ namespace Life
             }
         }
 
+        /// <summary>
+        /// Generate cells from seed file(type:rectangle,ellipse and version:2)
+        /// </summary>
+        /// <param name="arrs"></param>
+        /// <param name="grid"></param>
         private void GenerateCellByStructure(string[] arrs, Grid grid)
         {
             int bottom_row = int.Parse(arrs[3]);
