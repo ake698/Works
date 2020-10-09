@@ -145,8 +145,8 @@ namespace MyCollections
         public bool RemoveAll(T item)
         {
             //=// INSERT CODE HERE
-            int[] arrs= SearchAll((x) => { return x.Equals(item); });
-            if (arrs.Length < 0) return false;
+            int[] arrs= SearchAll((x) => x.Equals(item));
+            if (arrs.Length <= 0) return false;
             for (int i = arrs.Length - 1; i >= 0; i--)
             {
                 Shift_Left(arrs[i]);
@@ -448,6 +448,7 @@ namespace MyCollections
                 !TryGetPredicate(fields[1], value, out Predicate<T> predicate)) return false;
 
             int index = collection.Search(predicate);
+            
 
             if (index != -1)
             {
