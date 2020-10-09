@@ -32,8 +32,10 @@ namespace Life
         public bool Center = false;
         // --survival
         public int[] Survival = new int[] { 2, 3 };
+        public string SurvivalArg = "2...3";
         // -- birth
         public int[] Birth = new int[] { 3 };
+        public string BirthArg = "3";
         // survival birth display
         public string Rules = "S( 2...3 ) B( 3 )";
         // --memory
@@ -62,7 +64,7 @@ namespace Life
             for (int i = 0; i < command.Length; i++)
             {
                 if (command[i].Trim() == "") continue;
-                if (command[i].StartsWith("-"))
+                if (command[i].StartsWith("--"))
                 {
                     if (key != null) dic.Add(key, args);
                     key = command[i];
@@ -191,60 +193,92 @@ namespace Life
 
             if (dic.ContainsKey("--survival"))
             {
-                string value = dic["--survival"][0];
-                value = value.Replace("...", "-");
-                var values = value.Split('-');
-                int[] tempSurvival = new int[values.Length];
-                for (int i = 0; i < values.Length; i++)
+                var survivalList = new List<int>();
+                var survivalValues = dic["--survival"];
+                bool survivalPass = true;
+                foreach(var x in survivalValues)
                 {
-                    string temp = values[i];
-                    if (!int.TryParse(temp, out int tempValue))
+                    string value = x.Replace("...", "*");
+                    if (value.Contains("*"))
                     {
-                        Utils.ConsoleErrorMsg("Survival: The survival must be integer.");
-                        tempSurvival = Survival;
-                        paramBuild = false;
-                        break;
+                        var valueArrs = value.Split("*");
+                        if (valueArrs[0].IntParamCheck("Survival", (x) => x > 0, out int result) && valueArrs[1].IntParamCheck("Survival", (x) => x > 0, out int result2))
+                        {
+                            survivalList.Add(result);
+                            survivalList.Add(result2);
+                        }
+                        else
+                        {
+                            Utils.ConsoleErrorMsg("Survival: The survival must greate than 0.");
+                            paramBuild = false;
+                            survivalPass = false;
+                            break;
+                        }
                     }
-                    if (tempValue <= 0)
+                    else
                     {
-                        tempSurvival = Survival;
-                        paramBuild = false;
-                        Utils.ConsoleErrorMsg("Survival: The birth must greate than 0.");
-                        break;
+                        if(value.IntParamCheck("Survival", (x) => x > 0, out int result))
+                            survivalList.Add(result);
+                        else
+                        {
+                            Utils.ConsoleErrorMsg("Survival: The survival must greate than 0.");
+                            survivalPass = false;
+                            paramBuild = false;
+                            break;
+                        }
                     }
-                    tempSurvival[i] = tempValue;
+                };
+                if (survivalList.Count > 0 && survivalPass)
+                { 
+                    Survival = survivalList.ToArray();
+                    SurvivalArg = string.Join(" ", survivalValues.ToArray());
                 }
-                Survival = tempSurvival;
             }
 
             if (dic.ContainsKey("--birth"))
             {
-                string value = dic["--birth"][0];
-                value = value.Replace("...", "-");
-                var values = value.Split('-');
-                int[] tempBirth = new int[values.Length];
-                for (int i = 0; i < values.Length; i++)
+                var birthList = new List<int>();
+                var birthValues = dic["--birth"];
+                var birthPass = true;
+                foreach(var x in birthValues)
                 {
-                    string temp = values[i];
-                    if (!int.TryParse(temp, out int tempValue))
+                    string value = x.Replace("...", "*");
+                    if (value.Contains("*"))
                     {
-                        Utils.ConsoleErrorMsg("Birth: The birth must be integer.");
-                        paramBuild = false;
-                        tempBirth = Birth;
-                        break;
+                        var valueArrs = value.Split("*");
+                        if (valueArrs[0].IntParamCheck("Birth", (x) => x > 0, out int result) && valueArrs[1].IntParamCheck("Birth", (x) => x > 0, out int result2))
+                        {
+                            birthList.Add(result);
+                            birthList.Add(result2);
+                        }
+                        else
+                        {
+                            paramBuild = false;
+                            birthPass = false;
+                            Utils.ConsoleErrorMsg("Birth: The birth must greate than 0.");
+                            break;
+                        }
                     }
-                    if (tempValue <= 0)
+                    else
                     {
-                        tempBirth = Birth;
-                        Utils.ConsoleErrorMsg("Birth: The birth must greate than 0.");
-                        paramBuild = false;
-                        break;
+                        if (value.IntParamCheck("Birth", (x) => x > 0, out int result))
+                            birthList.Add(result);
+                        else
+                        {
+                            paramBuild = false;
+                            birthPass = false;
+                            Utils.ConsoleErrorMsg("Birth: The birth must greate than 0.");
+                            break;
+                        }
                     }
-                    tempBirth[i] = tempValue;
+                };
+                if (birthList.Count > 0 && birthPass)
+                {
+                    Birth = birthList.ToArray();
+                    BirthArg = string.Join(" ", birthValues.ToArray());
                 }
-                Birth = tempBirth;
             }
-            Rules = $"S( {string.Join("...", Survival)} ) B( {string.Join("...", Birth)} )";
+            Rules = $"S( {SurvivalArg} ) B( {BirthArg} )";
 
             if (dic.ContainsKey("--memory"))
             {

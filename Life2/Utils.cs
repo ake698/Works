@@ -29,6 +29,24 @@ namespace Life
             return true;
         }
 
+        public static bool IntParamCheck(this string source, string title, Predicate<int> predicate, out int result)
+        {
+            result = -1;
+            if (!int.TryParse(source, out int value))
+            {
+                ConsoleErrorMsg($"{title}: The {title.ToLower()} must be integer.");
+                return false;
+            }
+
+            if (predicate(value))
+            {
+                result = value;
+                return true;
+            }
+            return false;
+        }
+
+
         public static void ConsoleErrorMsg(string msg)
         {
             Console.ForegroundColor = ConsoleColor.Red;
