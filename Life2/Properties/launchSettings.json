@@ -14,7 +14,7 @@
       //"commandLineArgs": "--seed C:\\Users\\admin\\Desktop\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --max-update 15 --dimensions 15 20"
       //"commandLineArgs": "--neighbour vonNeumann 1 false"
       //"commandLineArgs": "--output C:\\Users\\admin\\Desktop\\output.seed"
-      "commandLineArgs": "--dimensions 32 32 --birth 3 5...8 --survival 5...8 --step"
+      "commandLineArgs": "--dimensions 35 32 --birth 3 5...8 12 --survival 5...8 8 --step"
     }
   }
 }

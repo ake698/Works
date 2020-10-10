@@ -1,4 +1,4 @@
-﻿namespace Life2
+﻿namespace Life
 {
     public enum Neighbourhood
     {

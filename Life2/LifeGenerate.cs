@@ -1,5 +1,4 @@
 ﻿using Display;
-using Life2;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
