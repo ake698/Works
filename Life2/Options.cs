@@ -27,8 +27,6 @@ namespace Life
         private double updateRate = 5.0;
         private double randomFactor = 0.5;
         private string inputFile = null;
-        // --neighbour type order center
-        private Neighbourhood neighbourhood = Neighbourhood.MOORE;
         private int order = 1;
         // --survival --birth
         private int[] survival = new int[] { 2, 3 };
@@ -128,14 +126,7 @@ namespace Life
 
         public bool StepMode { get; set; } = false;
         public bool Ghost { get; set; } = false;
-        public Neighbourhood Neighbourhood
-        {
-            get => neighbourhood;
-            set
-            {
-                neighbourhood = value;
-            }
-        }
+        public Neighbourhood Neighbourhood { get; set; } = Neighbourhood.MOORE;
         public int Order 
         { get => order; 
           set 
@@ -161,7 +152,7 @@ namespace Life
                         throw new ArgumentException($"Survival {v} is must greate than 0. ");
                     }
                 }
-                survival = Survival;
+                survival = value;
             }
         }
         public string SurvivalArg { get; set; } = "2...3 ";
@@ -204,7 +195,7 @@ namespace Life
                 {
                     throw new ArgumentException($"Incompatible file extension \'{Path.GetExtension(value)}\'");
                 }
-                inputFile = value;
+                outputFile = value;
             }
         }
 
@@ -219,7 +210,7 @@ namespace Life
             output += "Memory: ".PadLeft(padding) + $"{Memory}\n";
             output += "Update Rate: ".PadLeft(padding) + $"{UpdateRate} updates/s\n";
             output += "Roules: ".PadLeft(padding) + $"S( {SurvivalArg}) B ( {BirthArg}) \n";
-            output += "Neighbourhood: ".PadLeft(padding) + $"{Neighbourhood} B ( {Order} ) \n";
+            output += "Neighbourhood: ".PadLeft(padding) + $"{Neighbourhood} ( {Order} ) \n";
             output += "Periodic: ".PadLeft(padding) + (Periodic ? "Yes" : "No") + "\n";
             output += "Rows: ".PadLeft(padding) + Rows + "\n";
             output += "Columns: ".PadLeft(padding) + Columns + "\n";

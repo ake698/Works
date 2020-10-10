@@ -59,12 +59,45 @@ namespace Life
 
             grid.RevertWindow();
 
-            if (isSteadyState) Logging.Message($"Steady-state detected... periodicity = {periodicity}");
-            else Logging.Message($"Steady-state not detected...");
+            LoggingSteadyState(isSteadyState, periodicity);
+            OutPutFile(options.OutputFile, universe);
             Logging.Message("Press spacebar to exit program...");
             WaitSpacebar();
         }
 
+        private static void LoggingSteadyState(bool isSteadyState, string periodicity)
+        {
+            if (isSteadyState)
+            {
+                Logging.Message($"Steady-state detected... periodicity = {periodicity}");
+            }
+            else 
+            { 
+                Logging.Message($"Steady-state not detected...");
+            }
+        }
+        private static void OutPutFile(string outputFile, int[,] universe)
+        {
+            if (!(string.IsNullOrEmpty(outputFile)))
+            {
+                Logging.Message($"Final generation written to file: {outputFile}");
+                FileStream file = new FileStream(outputFile, FileMode.Create);
+                StreamWriter sw = new StreamWriter(file);
+                sw.WriteLine("#version=2.0");
+                for (int i = 0; i < universe.GetLength(0); i++)
+                {
+                    for (int p = 0; p < universe.GetLength(1); p++)
+                    {
+                        if(universe[i,p] == (int)CellState.Full)
+                        {
+                            sw.WriteLine($"(o) cell: {i}, {p}");
+                        }
+                    }
+                }
+                        sw.Close();
+                file.Close();
+            }
+        }
         private static int[,] EvolveUniverse(int[,] universe, Options options)
         {
             const int ALIVE = 1;
@@ -79,7 +112,7 @@ namespace Life
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    int neighbours = CountNeighbours(universe, i, j, options.Periodic, options.Neighbourhood, options.Order, options.Center);
+                      int neighbours = CountNeighbours(universe, i, j, options.Periodic, options.Neighbourhood, options.Order, options.Center);
 
                     if (universe[i, j] == ALIVE && (Array.IndexOf(options.Survival, neighbours) >= 0))
                     {
@@ -131,7 +164,7 @@ namespace Life
                                 neighbours += universe[r, c];
                         }
                     }
-                    _ = (index >= order) ? index++ : index--;
+                    _ = (index >= order) ? index--: index++;
                 }
             }
             else
@@ -143,7 +176,8 @@ namespace Life
                         if (r != i || c != j)
                         {
                             if (Math.Abs(j - c) > index && Neighbourhood.VONNEUMANN == neighbourhood) continue;
-                            neighbours += universe[Modulus(r, rows), Modulus(c, columns)];
+                            if (universe[Modulus(r, rows), Modulus(c, columns)] == 1)
+                                neighbours += universe[Modulus(r, rows), Modulus(c, columns)];
                         }
                     }
                     _ = (index >= order) ? index++ : index--;
@@ -151,7 +185,8 @@ namespace Life
             }
             if (center)
             {
-                neighbours += universe[i, j];
+                if (universe[i, j] == 1)
+                    neighbours += universe[i, j];
             }
 
             return neighbours;
@@ -182,10 +217,10 @@ namespace Life
         private static bool IsSteadyState(List<int[,]> records, int[,] universe, int memory, out string periodicity)
         {
             periodicity = "N/A";
-            if (IsAllDead(universe))
-            {
-                return true;
-            }
+            //if (IsAllDead(universe))
+            //{
+            //    return true;
+            //}
             int generates = ContainUniverse(records, universe);
             periodicity = (generates > 1) ? generates.ToString() : periodicity;
             if (generates > 0)

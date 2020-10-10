@@ -3,13 +3,16 @@
     "Life2": {
       "commandName": "Project",
       //"commandLineArgs": "--step --ghost",
-      //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\gnarl-hanabi1_47x47.seed --max-update 10 --dimensions 47 47 --generations 100 --birth 1 --survival 1 --neighbour vonNeumann 1 true"
+      // died
+      //"commandLineArgs": "--step --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\gnarl-hanabi1_47x47.seed --max-update 10 --dimensions 47 47 --generations 100 --birth 1 --survival 1 --neighbour vonNeumann 1 true"
+      // target
       //"commandLineArgs": "--ghost --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target2_16x16.seed "
-      //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed --step"
-      // cycle == 2
       "commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed"
+      // cycle == 2
+      //"commandLineArgs": "--output E:\\TODO\\Life2\\output.seed --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed"
       // bug
-      //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --max-update 15 --dimensions 48 48 --generations 300 --periodic --birth 34...45 --survival 34...58 --neighbour Moore 5 true"
+      //"commandLineArgs": "--step --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --max-update 15 --dimensions 48 48 --generations 300 --periodic --birth 34...45 --survival 34...58 --neighbour moore 5 true"
+      //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\highlife-replicator_47x47.seed --max-update 30 --dimensions 47 47 --generations 200 --birth 3 6 --survival 2 3"
       //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --max-update 15 --dimensions 15 20 --memory 4"
       // cycle = 9
       //"commandLineArgs": "--ghost --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --dimensions 15 20 --max-update 16"
@@ -17,6 +20,8 @@
       //"commandLineArgs": "--output E:\\TODO\\Life2\\output.seed"
       //"commandLineArgs": "--dimensions 35 32 --birth 3 5...8 12 --survival 5...8 8 --step"
       //"commandLineArgs": "--dimensions 19 19 --birth 3 5...8 12 --survival 5...8 --seed E:\\TODO\\Life1\\CAB201_2020S2_ProjectPartA_nXXXXXXXX\\Seeds\\pulsar_19x19.seed"
+      //"commandLineArgs": "--dimensions 48 48  --birth 34...45 --survival 34...58 --neighbour moore 5 true"
+      //"commandLineArgs": "--dimensions 32 32  --birth 3 5...8 --survival 5...8 --periodic"
     }
   }
 }

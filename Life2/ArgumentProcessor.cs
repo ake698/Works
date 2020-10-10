@@ -137,7 +137,7 @@ namespace Life
         private static void ProcessNeighbour(string[] args, int i, Options options)
         {
             ValidateParameterCount(args, i, "neighbour", 3);
-            if (!Enum.TryParse(args[i + 1], out Neighbourhood neighbourhood))
+            if (!Enum.TryParse(args[i + 1].ToUpper(), out Neighbourhood neighbourhood))
             {
                 throw new ArgumentException($"Neighbour type \'{args[i + 1]}\' is not one of two string," +
                     $" either 'moore' or 'vonNeumann'.");
@@ -179,17 +179,31 @@ namespace Life
             {
                 original += args[p + i] + " ";
                 var tempArgs = args[p + i].Split("...");
-                foreach (var arg in tempArgs)
+                if (!int.TryParse(tempArgs[0], out int start))
                 {
-                    if (!int.TryParse(arg, out int number))
-                    {
-                        throw new ArgumentException($"{options} \'{arg}\' is not a valid integer.");
-                    }
-                    if (paramters.Contains(number))
-                    {
-                        throw new ArgumentException($"{options} \'{arg}\' already exists.");
-                    }
-                    paramters.Add(number);
+                    throw new ArgumentException($"{options} \'{tempArgs[0]}\' is not a valid integer.");
+                }
+                if (tempArgs.Length > 2)
+                {
+                    throw new ArgumentException($"{options} \'{args[p + i]}\' formate error.");
+                }
+                else if(tempArgs.Length == 1)
+                {
+                    ValidListExits(paramters, start, options);
+                    paramters.Add(start);
+                    continue;
+                }
+
+                if (!int.TryParse(tempArgs[1], out int end))
+                {
+                    throw new ArgumentException($"{options} \'{tempArgs[1]}\' is not a valid integer.");
+                }
+
+
+                for (int o = Math.Min(start, end); o <= Math.Max(start, end); o++)
+                {
+                    ValidListExits(paramters, o, options);
+                    paramters.Add(o);
                 }
             }
             return paramters.ToArray();
@@ -229,6 +243,14 @@ namespace Life
             {
                 throw new ArgumentException($"Insufficient parameters for \'--{option}\' option " +
                     $"(provided {parameterCount}, expected {string.Join(',', numParameters)})");
+            }
+        }
+
+        private static void ValidListExits(List<int> paramters, int paramter, string options)
+        {
+            if (paramters.Contains(paramter))
+            {
+                throw new ArgumentException($"{options} \'{paramter}\' already exists.");
             }
         }
         #endregion
