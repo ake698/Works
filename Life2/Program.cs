@@ -11,7 +11,6 @@ namespace Life
         static void Main(string[] args)
         {
             Options options = ArgumentProcessor.Process(args);
-            //int[,] universe = InitializeUniverse(options);
             bool isSteadyState = false;
             string periodicity = "N/A";
             int[,] universe = new InitializeUniverse(options.Rows, options.Columns, options.InputFile, options.RandomFactor).Initialize();
@@ -81,6 +80,7 @@ namespace Life
             if (!(string.IsNullOrEmpty(outputFile)))
             {
                 Logging.Message($"Final generation written to file: {outputFile}");
+                Directory.CreateDirectory(Path.GetFullPath(Path.GetDirectoryName(outputFile)));
                 FileStream file = new FileStream(outputFile, FileMode.Create);
                 StreamWriter sw = new StreamWriter(file);
                 sw.WriteLine("#version=2.0");
@@ -217,10 +217,6 @@ namespace Life
         private static bool IsSteadyState(List<int[,]> records, int[,] universe, int memory, out string periodicity)
         {
             periodicity = "N/A";
-            //if (IsAllDead(universe))
-            //{
-            //    return true;
-            //}
             int generates = ContainUniverse(records, universe);
             periodicity = (generates > 1) ? generates.ToString() : periodicity;
             if (generates > 0)
@@ -240,20 +236,6 @@ namespace Life
             records.Add(universe);
         }
 
-        private static bool IsAllDead(int[,] universe)
-        {
-            for (int i = 0; i < universe.GetLength(0); i++)
-            {
-                for (int p = 0; p < universe.GetLength(1); p++)
-                { 
-                    if(universe[i ,p] == (int)CellState.Full)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
 
         private static int ContainUniverse(List<int[,]> records, int[,] universe)
         {
@@ -284,161 +266,5 @@ namespace Life
             }
             return true;
         }
-
-
-        #region delete
-        //private static int[,] InitializeUniverse(Options options)
-        //{
-        //    int[,] universe;
-
-        //    if (options.InputFile == null)
-        //    {
-        //        universe = InitializeFromRandom(options.Rows, options.Columns, options.RandomFactor);
-        //    }
-        //    else
-        //    {
-        //        try
-        //        {
-        //            universe = InitializeFromFile(options.Rows, options.Columns, options.InputFile);
-        //            //universe = new InitializeFromFile(options.Rows, options.Columns, options.InputFile).Initialize();
-        //        }
-        //        catch
-        //        {
-        //            Logging.Warning($"Error initializing universe using \'{options.InputFile}\'. Reverting to randomised universe...");
-        //            universe = InitializeFromRandom(options.Rows, options.Columns, options.RandomFactor);
-        //        }
-        //    }
-
-        //    return universe;
-        //}
-
-        //private static int[,] InitializeFromRandom(int rows, int columns, double randomFactor)
-        //{
-        //    int[,] universe = new int[rows, columns];
-
-        //    Random random = new Random();
-        //    for (int i = 0; i < universe.GetLength(0); i++)
-        //    {
-        //        for (int j = 0; j < universe.GetLength(1); j++)
-        //        {
-        //            universe[i, j] = random.NextDouble() < randomFactor ? 1 : 0;
-        //        }
-        //    }
-
-        //    return universe;
-        //}
-
-        //private static int[,] InitializeFromFile(int rows, int columns, string inputFile)
-        //{
-        //    int[,] universe = new int[rows, columns];
-        //    using (StreamReader reader = new StreamReader(inputFile))
-        //    {
-        //        string line = reader.ReadLine();
-        //        double version = double.Parse(line.Split("=")[^1]);
-        //        while (!reader.EndOfStream)
-        //        {
-        //            line = reader.ReadLine();
-        //            if(version == 1)
-        //            {
-        //                ParseFileVersion1(line, universe);
-        //            }
-        //            else
-        //            {
-        //                ParseFileVersion2(line, universe);
-        //            }
-        //        }
-        //    }
-
-        //    return universe;
-        //}
-
-        //private static void ParseFileVersion1(string line, int[,] universe)
-        //{
-        //    string[] elements = line.Split(" ");
-
-        //    int row = int.Parse(elements[0]);
-        //    int column = int.Parse(elements[1]);
-        //    universe[row, column] = (int)CellState.Full;
-        //}
-
-        //private static void ParseFileVersion2(string line, int[,] universe)
-        //{
-        //    string[] elements = line.Replace(",", "").Split(" ");
-        //    string type = elements[1];
-        //    if(type.Equals("cell:", StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        if (elements[0].Contains("o"))
-        //        {
-        //            int row = int.Parse(elements[2]);
-        //            int column = int.Parse(elements[3]);
-        //            universe[row, column] = (int)CellState.Full;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ParseFileVersion2WithStructure(elements, universe);
-        //    }
-        //}
-
-        //private static void ParseFileVersion2WithStructure(string[] elements, int[,] universe)
-        //{
-
-        //    if(elements[1].Equals("rectangle", StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        ParseFileVersion2WithRectangle(elements, universe);
-        //    }
-        //    else
-        //    {
-        //        ParseFileVersion2WithEllipse(elements, universe);
-        //    }
-        //}
-
-        //private static void ParseFileVersion2WithRectangle(string[] elements, int[,] universe)
-        //{
-        //    int bottom_row = int.Parse(elements[3]);
-        //    int bottom_column = int.Parse(elements[4]);
-        //    int top_row = int.Parse(elements[5]);
-        //    int top_column = int.Parse(elements[6]);
-        //    // rectangle
-        //    for (int i = bottom_row; i <= top_row; i++)
-        //    {
-        //        for (int p = bottom_column; p <= top_column; p++)
-        //        {
-        //            if (elements[0].Contains("o"))
-        //                universe[i, p] = (int)CellState.Full;
-        //            else
-        //                universe[i, p] = (int)CellState.Blank;
-        //        }
-        //    }
-        //}
-
-        //private static void ParseFileVersion2WithEllipse(string[] elements, int[,] universe)
-        //{
-        //    // ellipse
-        //    int bottom_row = int.Parse(elements[3]);
-        //    int bottom_column = int.Parse(elements[4]);
-        //    int top_row = int.Parse(elements[5]);
-        //    int top_column = int.Parse(elements[6]);
-        //    int centerRow = (bottom_row + top_row) / 2;
-        //    int centerColumn = (bottom_column + top_column) / 2;
-        //    int lenthRow = (top_row - bottom_row + 1);
-        //    int lengthColumn = (top_column - bottom_column + 1);
-        //    for (int i = bottom_row; i <= top_row; i++)
-        //    {
-        //        for (int p = bottom_column; p <= top_column; p++)
-        //        {
-        //            var value = 4 * (i - 0.5 - centerRow) * (i - 0.5 - centerRow) * lengthColumn * lengthColumn
-        //                + 4 * (p - 0.5 - centerColumn) * (p - 0.5 - centerColumn) * lenthRow * lenthRow;
-        //            if (value <= lenthRow * lenthRow * lengthColumn * lengthColumn)
-        //            {
-        //                if (elements[0].Contains("o"))
-        //                    universe[i, p] = (int)CellState.Full;
-        //                else
-        //                    universe[i, p] = (int)CellState.Blank;
-        //            }
-        //        }
-        //    }
-        //}
-        #endregion
     }
 }

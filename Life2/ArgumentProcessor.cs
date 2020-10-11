@@ -55,13 +55,21 @@ namespace Life
                         case "--ghost":
                             options.Ghost = true;
                             break;
+                        default:
+                            ValidOptions(args[i]);
+                            break;
                     }
                 }
                 Logging.Success("Command line arguments processed without issue!");
             }
-            catch (Exception exception)
+            catch (ArgumentException exception)
             {
                 Logging.Warning(exception.Message);
+                Logging.Message("Reverting to defaults for unprocessed arguments...");
+            }
+            catch (Exception exception)
+            {
+                Logging.Error(exception.Message);
                 Logging.Message("Reverting to defaults for unprocessed arguments...");
             }
             finally
@@ -225,7 +233,15 @@ namespace Life
             options.OutputFile = args[i + 1];
         }
 
-        #region Validate parameter
+        #region Validate
+        private static void ValidOptions(string option)
+        {
+            if (option.StartsWith("--"))
+            {
+                throw new FormatException($"Invalid option {option}");
+            }
+        }
+
         private static void ValidateParameterCount(string[] args, int i, string option, int numParameters)
         {
             var parameterCount = CaculateParameterCount(args, i);

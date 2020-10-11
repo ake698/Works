@@ -28,10 +28,8 @@ namespace Life
         private double randomFactor = 0.5;
         private string inputFile = null;
         private int order = 1;
-        // --survival --birth
         private int[] survival = new int[] { 2, 3 };
         private int[] birth = new int[] { 3 };
-        // --memory
         private int memory = 16;
         private string outputFile = null;
 
@@ -110,13 +108,13 @@ namespace Life
             get => inputFile;
             set
             {
-                if (!File.Exists(value))
-                {
-                    throw new ArgumentException($"File \'{value}\' does not exist.");
-                }
                 if (!Path.GetExtension(value).Equals(".seed"))
                 {
                     throw new ArgumentException($"Incompatible file extension \'{Path.GetExtension(value)}\'");
+                }
+                if (!File.Exists(value))
+                {
+                    throw new ArgumentException($"File \'{value}\' does not exist.");
                 }
                 inputFile = value;
             }
