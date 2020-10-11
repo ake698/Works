@@ -144,16 +144,18 @@ namespace Life
             int bottom_column = int.Parse(elements[4]);
             int top_row = int.Parse(elements[5]);
             int top_column = int.Parse(elements[6]);
-            int centerRow = (bottom_row + top_row) / 2;
-            int centerColumn = (bottom_column + top_column) / 2;
-            int lenthRow = (top_row - bottom_row + 1);
-            int lengthColumn = (top_column - bottom_column + 1);
+            double centerRow = (double)(bottom_row + top_row + 1) / 2;
+            double centerColumn = (double)(bottom_column + top_column + 1) / 2;
+            double lenthRow = Math.Abs(top_row - bottom_row ) + 1;
+            double lengthColumn = Math.Abs(top_column - bottom_column) + 1;
             for (int i = bottom_row; i <= top_row; i++)
             {
                 for (int p = bottom_column; p <= top_column; p++)
                 {
-                    var value = 4 * (i - 0.5 - centerRow) * (i - 0.5 - centerRow) * lengthColumn * lengthColumn
-                        + 4 * (p - 0.5 - centerColumn) * (p - 0.5 - centerColumn) * lenthRow * lenthRow;
+                    var x = 4 * Math.Pow(i + 0.5 - centerRow, 2) * lengthColumn * lengthColumn;
+                    var y = 4 * Math.Pow(p + 0.5 - centerColumn, 2) * lenthRow * lenthRow;
+                    var value = 4 * Math.Pow(i +0.5 - centerRow, 2)  * lengthColumn * lengthColumn
+                        + 4 * Math.Pow(p + 0.5 - centerColumn, 2) * lenthRow * lenthRow;
                     if (value <= lenthRow * lenthRow * lengthColumn * lengthColumn)
                     {
                         if (elements[0].Contains("o"))

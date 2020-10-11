@@ -22,23 +22,20 @@
     /// <date>August 2020</date>
     public class Cell
     {
+        private readonly char[] RENDER_CHARACTERS = new char[] {
+            '\u0020',   // ' '
+            '\u2588',   // '█'
+            '\u2593',   // '▓'
+            '\u2592',   // '▒'
+            '\u2591'    // '░'
+        };
         //private readonly char[] RENDER_CHARACTERS = new char[] {
-
-        //    '\u0020',   // ' '
-        //    '\u2588',   // '█'
+        //    '0',   // ' '
+        //    '1',   // '█'
         //    '\u2593',   // '▓'
         //    '\u2592',   // '▒'
         //    '\u2591'    // '░'
         //};
-
-        private readonly char[] RENDER_CHARACTERS = new char[] {
-
-            '0',   // ' '
-            '1',   // '█'
-            '2',   // '▓'
-            '3',   // '▒'
-            '4'    // '░'
-        };
 
         private CellState state;
 
@@ -57,11 +54,6 @@
         public void SetState(CellState state)
         {
             this.state = state;
-        }
-
-        public CellState GetState()
-        {
-            return state;
         }
 
         /// <summary>

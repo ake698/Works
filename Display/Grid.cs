@@ -16,7 +16,7 @@ namespace Display
         private const int LeftMargin = 2;
         private const int RightMargin = 0;
         private const int Border = 1;
-        private const int CellWidth = 1;
+        private const int CellWidth = 2;
         private const int CellHeight = 1;
         private const int MinSize = 4;
         private const int MaxSize = 48;
@@ -284,11 +284,6 @@ namespace Display
         {
             bufferHeight = TopMargin + BottomMargin + 2 * Border + CellHeight * rows;
             bufferWidth = LeftMargin + RightMargin + 2 * Border + CellWidth * cols;
-        }
-
-        public Cell[][] GetCells()
-        {
-            return cells;
         }
     }
 }
