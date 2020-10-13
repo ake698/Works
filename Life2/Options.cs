@@ -5,34 +5,37 @@ using System.Text;
 
 namespace Life
 {
-    class Options
+    class DefaultOptions
     {
-        private const int MIN_DIMENSION = 4;
-        private const int MAX_DIMENSION = 48;
-        private const int MIN_GENERATION = 4;
-        private const double MIN_UPDATE = 1.0;
-        private const double MAX_UPDATE = 30.0;
-        private const double MIN_RANDOM = 0.0;
-        private const double MAX_RANDOM = 1.0;
-        private const int MIN_NEIGHBOURORDER = 1;
-        private const int MAX_NEIGHBOURORDER = 10;
-        private const int MIN_SURVIVALBIRTH = 0;
-        private const int MIN_MEMORY = 4;
-        private const int MAX_MEMORY = 512;
-        
+        protected const int MIN_DIMENSION = 4;
+        protected const int MAX_DIMENSION = 48;
+        protected const int MIN_GENERATION = 4;
+        protected const double MIN_UPDATE = 1.0;
+        protected const double MAX_UPDATE = 30.0;
+        protected const double MIN_RANDOM = 0.0;
+        protected const double MAX_RANDOM = 1.0;
+        protected const int MIN_NEIGHBOURORDER = 1;
+        protected const int MAX_NEIGHBOURORDER = 10;
+        protected const int MIN_SURVIVALBIRTH = 0;
+        protected const int MIN_MEMORY = 4;
+        protected const int MAX_MEMORY = 512;
 
-        private int rows = 16;
-        private int columns = 16;
-        private int generations = 50;
-        private double updateRate = 5.0;
-        private double randomFactor = 0.5;
-        private string inputFile = null;
-        private int order = 1;
-        private int[] survival = new int[] { 2, 3 };
-        private int[] birth = new int[] { 3 };
-        private int memory = 16;
-        private string outputFile = null;
 
+        protected int rows = 16;
+        protected int columns = 16;
+        protected int generations = 50;
+        protected double updateRate = 5.0;
+        protected double randomFactor = 0.5;
+        protected string inputFile = null;
+        protected int order = 1;
+        protected int[] survival = new int[] { 2, 3 };
+        protected int[] birth = new int[] { 3 };
+        protected int memory = 16;
+        protected string outputFile = null;
+    }
+
+    class Options : DefaultOptions
+    {
         public int Rows
         {
             get => rows;
