@@ -88,7 +88,7 @@ namespace Life
 
         private void ParseFileVersion2(string line)
         {
-            string[] elements = line.Replace(",", "").Split(" ");
+            string[] elements = line.Replace(",", "").Replace(" :",":").Split(" ");
             string type = elements[1];
             if (type.Equals("cell:", StringComparison.OrdinalIgnoreCase))
             {
@@ -108,7 +108,7 @@ namespace Life
         private void ParseFileVersion2WithStructure(string[] elements)
         {
 
-            if (elements[1].Equals("rectangle", StringComparison.OrdinalIgnoreCase))
+            if (elements[1].Equals("rectangle:", StringComparison.OrdinalIgnoreCase))
             {
                 ParseFileVersion2WithRectangle(elements);
             }
@@ -120,10 +120,10 @@ namespace Life
 
         private void ParseFileVersion2WithRectangle(string[] elements)
         {
-            int bottom_row = int.Parse(elements[3]);
-            int bottom_column = int.Parse(elements[4]);
-            int top_row = int.Parse(elements[5]);
-            int top_column = int.Parse(elements[6]);
+            int bottom_row = int.Parse(elements[2]);
+            int bottom_column = int.Parse(elements[3]);
+            int top_row = int.Parse(elements[4]);
+            int top_column = int.Parse(elements[5]);
             // rectangle
             for (int i = bottom_row; i <= top_row; i++)
             {
@@ -140,10 +140,10 @@ namespace Life
         private void ParseFileVersion2WithEllipse(string[] elements)
         {
             // ellipse
-            int bottom_row = int.Parse(elements[3]);
-            int bottom_column = int.Parse(elements[4]);
-            int top_row = int.Parse(elements[5]);
-            int top_column = int.Parse(elements[6]);
+            int bottom_row = int.Parse(elements[2]);
+            int bottom_column = int.Parse(elements[3]);
+            int top_row = int.Parse(elements[4]);
+            int top_column = int.Parse(elements[5]);
             double centerRow = (double)(bottom_row + top_row + 1) / 2;
             double centerColumn = (double)(bottom_column + top_column + 1) / 2;
             double lenthRow = Math.Abs(top_row - bottom_row ) + 1;
