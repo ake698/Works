@@ -12,12 +12,13 @@
       //"commandLineArgs": "--step --output E:\\TODO\\Life2\\output.seed --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\target_16x16.seed"  
       // bug
       //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --max-update 15 --dimensions 48 48 --generations 300 --periodic --birth 34...45 --survival 34...58 --neighbour moore 5 true"
+      "commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\bugs_48x48.seed --dimensions 48 48 --memory 4 --output output.seed --generations 4"
       // test
       //"commandLineArgs": "--step --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\test.seed --max-update 15 --dimensions 6 10 --generations 300  --neighbour moore 5 true"
       //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\highlife-replicator_47x47.seed --max-update 30 --dimensions 47 47 --generations 200 --birth 3 6 --survival 2 3"
       //"commandLineArgs": "--seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --max-update 15 --dimensions 15 20 --memory 4"
       // cycle = 9
-      "commandLineArgs": "--ghost --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --dimensions 15 20 --max-update 16"
+      //"commandLineArgs": "--ghost --seed E:\\TODO\\Life2\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\CAB201_2020S2_ProjectPart2_nXXXXXXXX\\Seeds\\Seeds\\worker_bee_15x20.seed --dimensions 15 20 --max-update 16"
       //"commandLineArgs": "--neighbour vonNeumann 1 false"
       //"commandLineArgs": "--output E:\\TODO\\Life2\\asdfadsfsadf\\fadsfds\\output.seed --generations 10"
       //"commandLineArgs": "--dimensions 35 32 --birth 3 5...8 12  --survival 5...8 8 --step"

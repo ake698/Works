@@ -80,7 +80,7 @@ namespace Life
             if (!(string.IsNullOrEmpty(outputFile)))
             {
                 Logging.Message($"Final generation written to file: {outputFile}");
-                Directory.CreateDirectory(Path.GetFullPath(Path.GetDirectoryName(outputFile)));
+                CreateOutputFileDir(outputFile);
                 FileStream file = new FileStream(outputFile, FileMode.Create);
                 StreamWriter sw = new StreamWriter(file);
                 sw.WriteLine("#version=2.0");
@@ -98,6 +98,15 @@ namespace Life
                 file.Close();
             }
         }
+
+        private static void CreateOutputFileDir(string outputFile)
+        {
+            var fileFullPath = Path.GetFullPath(outputFile);
+            var dir = Path.GetDirectoryName(fileFullPath);
+            var dirFullPath = Path.GetFullPath(dir);
+            Directory.CreateDirectory(dirFullPath);
+        }
+
         private static int[,] EvolveUniverse(int[,] universe, Options options)
         {
             const int ALIVE = 1;
